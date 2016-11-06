@@ -1,25 +1,6 @@
 use v6;
 use HTML::Entity;
 
-=begin pod
-
-=NAME HTML - Simple HTML Tag Generators
-
-=SYNOPSIS
-
-=begin code
-use HG::HTML;
-
-say HTML::p.new(:text('This is my paragraph'), :class('pretty')).render;
-# <p class="pretty">This is my paragraph</p>
-
-my $link = HTML::a.new(:text('paragraph'), :href('http://dom.com'));
-say HTML::p.new(:text("This is my $link"), :class('pretty')).render;
-
-=end code
-
-=end pod
-
 class HTML
 {
     has Hash $.attr is rw = {};

@@ -1,0 +1,34 @@
+=begin pod
+
+=NAME HTML - Simple HTML Tag Generators
+
+=SYNOPSIS
+
+    =begin code
+    use HTML::Tag;
+
+    say HTML::Tag::p.new(:text('This is my paragraph'), :class('pretty')).render;
+    
+    # <p class="pretty">This is my paragraph</p>
+
+    my $link = HTML::Tag::a.new(:text('paragraph'),
+                                :href('http://dom.com'));
+    say HTML::Tag::p.new(:text("This is my ", $link, ".")),
+                         :class('pretty')).render;
+    
+    # <p class="pretty">This is my <a href="http://dom.com">paragraph</a>.
+    =end code
+
+=DESCRIPTION
+
+HTML::Tag provides little objects to generate HTML tags. Tags that
+support :text have their string text encoded for HTML special
+characters.
+
+Tags that support :text also support "embedding" other tags inside
+their :text by passing alternating string text and tag objects as a
+list. Tag objects passed this way I<should not> have C<.render> called
+on them first to avoid the HTML special characters being escaped.
+
+
+=end pod
