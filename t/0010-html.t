@@ -2,7 +2,7 @@ use v6;
 use Test; 
 use lib <lib>;
 
-plan 12;
+plan 13;
 
 use-ok 'HTML::Tag::Tags', 'HTML::Tag::Tags can be use-d';
 use HTML::Tag::Tags;
@@ -19,7 +19,7 @@ is HTML::Tag::p.new(:text('test'), :class('MYClass'), :id('myNAME')).render, '<p
 is HTML::Tag::a.new(:text('My Page'), :href('http://mydomain.com')).render, '<a href="http://mydomain.com">My Page</a>', 'HTML::Tag::a works';
 
 # DIV & SPAN
-is HTML::Tag::div.new(:text('My Div')).render, '<div>My Div</div>', 'HTML::Tag::div works';
+is HTML::Tag::div.new(:text('My Div'), :style('funnyfont')).render, '<div style="funnyfont">My Div</div>', 'HTML::Tag::div works';
 is HTML::Tag::span.new(:text('My Span')).render, '<span>My Span</span>', 'HTML::Tag::span works';
 
 # FORM
@@ -28,6 +28,12 @@ is HTML::Tag::form.new(:action('/myscript/is') :id('myid')).render, '<form id="m
 # CSS Macro
 is HTML::Tag::Macro::CSS.new(:href('css/file.css')).render,
 '<link rel="stylesheet" type="text/css" href="css/file.css">', 'HTML::Tag::Macro:CSS works';
+
+# Image
+is HTML::Tag::img.new(:src('/img/foo.jpg'),
+		      :width(100), :height(150),
+		      :alt('funny pic'),
+		      :border(0)).render, '<img height="150" alt="funny pic" border="0" width="100" src="/img/foo.jpg">', 'HTML::Tag::img works.';
 
 # Swallowing another tag
 my $tag = HTML::Tag::a.new(:text('My Page'),

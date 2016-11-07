@@ -3,9 +3,10 @@ use HTML::Entity;
 
 class HTML::Tag
 {
-    has Hash $.attr is rw = {};
-    has Str  $.id is rw;
+    has Hash $.attr  is rw = {};
+    has Str  $.id    is rw;
     has Str  $.class is rw;
+    has Str  $.style is rw;
     
     method mktag(:$prefix, :$suffix = '>') {
 	my $tag;
@@ -20,6 +21,7 @@ class HTML::Tag
     method do-assignments() {
 	$!attr<id>    = $!id    if $!id;
 	$!attr<class> = $!class if $!class;
+	$!attr<style> = $!style if $!style;
     }
 }
 

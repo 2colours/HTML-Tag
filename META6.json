@@ -5,9 +5,11 @@
     "description" : "Generate simple, interleafable, HTML tags.",
     "authors" : [ "Mark Rushing" ],
     "provides" : {
-	"HTML::Tag" : "lib/HTML/Tag.pm"
+	"HTML::Tag"         : "lib/HTML/Tag.pm6",
+	"HTML::Tag::Tags"   : "lib/HTML/Tag/Tags.pm6",
+	"HTML::Tag::Macros" : "lib/HTML/Tag/Macros.pm6",
     },
-    "depends" : [ 'HTML::Entity' ],
+    "depends" : [ "HTML::Entity" ],
     "resources" : [ ],
     "source-url" : "ssh://git.orbislumen.net/opt/git6/HTML-Tag.git"
 }
