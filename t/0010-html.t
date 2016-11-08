@@ -25,6 +25,7 @@ is HTML::Tag::span.new(:text('My Span')).render, '<span>My Span</span>', 'HTML::
 # FORM
 is HTML::Tag::form.new(:action('/myscript/is') :id('myid')).render, '<form id="myid" action="/myscript/is"></form>', 'HTML::Tag::form works';
 is HTML::Tag::input.new(:value('testval'), :min(0)).render, '<input min="0" type="text" value="testval">', 'HTML::Tag::input works';
+is HTML::Tag::input.new(:type('radio'), :checked(True)).render, '<input type="radio" checked>', 'HTML::Tag::input radio checked works';
 
 
 # CSS Macro
