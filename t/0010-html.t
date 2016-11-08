@@ -2,7 +2,7 @@ use v6;
 use Test; 
 use lib <lib>;
 
-plan 13;
+plan 18;
 
 use-ok 'HTML::Tag::Tags', 'HTML::Tag::Tags can be use-d';
 use HTML::Tag::Tags;
@@ -25,8 +25,12 @@ is HTML::Tag::span.new(:text('My Span')).render, '<span>My Span</span>', 'HTML::
 # FORM
 is HTML::Tag::form.new(:action('/myscript/is') :id('myid')).render, '<form id="myid" action="/myscript/is"></form>', 'HTML::Tag::form works';
 is HTML::Tag::input.new(:value('testval'), :min(0)).render, '<input min="0" type="text" value="testval">', 'HTML::Tag::input works';
-is HTML::Tag::input.new(:type('radio'), :checked(True)).render, '<input type="radio" checked>', 'HTML::Tag::input radio checked works';
-
+is HTML::Tag::input.new(:type('radio'), :checked(True)).render, '<input checked type="radio">', 'HTML::Tag::input radio checked works';
+is HTML::Tag::textarea.new(:text('This is in the box'), :id('boxy')).render, '<textarea id="boxy">This is in the box</textarea>', 'HTML::Tag::textarea works';
+my $tag = HTML::Tag::input.new(:name('fingers'));
+is HTML::Tag::fieldset.new(:form('myform'), :text($tag)).render, '<fieldset form="myform"><input name="fingers" type="text"></fieldset>', 'HTML::Tag::fieldset works ok';
+my $legend = HTML::Tag::legend.new(:text('Great fields'));
+is HTML::Tag::fieldset.new(:form('myform'), :text($legend, $tag)).render, '<fieldset form="myform"><legend>Great fields</legend><input name="fingers" type="text"></fieldset>', 'HTML::Tag::legend works ok';
 
 # CSS Macro
 is HTML::Tag::Macro::CSS.new(:href('css/file.css')).render,
@@ -39,8 +43,8 @@ is HTML::Tag::img.new(:src('/img/foo.jpg'),
 		      :border(0)).render, '<img height="150" alt="funny pic" border="0" width="100" src="/img/foo.jpg">', 'HTML::Tag::img works.';
 
 # Swallowing another tag
-my $tag = HTML::Tag::a.new(:text('My Page'),
-			   :href('http://mydomain.com')),
+$tag = HTML::Tag::a.new(:text('My Page'),
+			:href('http://mydomain.com')),
 is HTML::Tag::p.new(:text('test ', $tag), :id('myID')).render,
 	            '<p id="myID">test <a href="http://mydomain.com">My Page</a></p>', 'HTML::Tag swallowing other tags works';
 

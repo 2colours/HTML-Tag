@@ -12,8 +12,12 @@ class HTML::Tag
     method mktag(:$prefix, :$suffix = '>') {
 	my $tag;
 	$tag = $prefix if $prefix;
-	$.attr.keys.map: { when 'checked' { $tag ~= ' checked' }
-			   default        { $tag ~= " $_=\"{$.attr«$_»}\"" };
+	$.attr.keys.map: { when 'checked'   { $tag ~= ' checked' }
+			   when 'disabled'  { $tag ~= ' disabled' }
+			   when 'readonly'  { $tag ~= ' readonly' }
+			   when 'required'  { $tag ~= ' required' }
+			   when 'autofocus' { $tag ~= ' autofocus' }
+			   default          { $tag ~= " $_=\"{$.attr«$_»}\"" };
 			 }
 	$tag ~= $suffix if $suffix;
 	return $tag;
@@ -26,6 +30,30 @@ class HTML::Tag
 	$!attr<name>  = $!name  if $!name;
     }
 }
+
+class HTML::Tag::Form-tag is HTML::Tag
+{
+    has     $.disabled  is rw;
+    has     $.readonly  is rw;
+    has     $.required  is rw;
+    has     $.autofocus is rw;
+    has Int $.maxlength is rw;
+    has Int $.size      is rw;
+    has Str $.value     is rw;
+    has Str $.form      is rw;
+
+    method do-assignments() {
+	callsame;
+	$.attr<disabled>  = $.disabled  if $.disabled;
+	$.attr<readonly>  = $.readonly  if $.readonly;
+	$.attr<required>  = $.required  if $.required;
+	$.attr<autofocus> = $.autofocus if $.autofocus;
+	$.attr<maxlength> = $.maxlength if $.maxlength.defined;
+	$.attr<size>      = $.size      if $.size.defined;
+	$.attr<value>     = $.value     if $.value;
+	$.attr<form>      = $.form      if $.form;
+    }
+}   
 
 role HTML::Tag::generic-single-tag[$T]
 {
