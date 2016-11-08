@@ -7,13 +7,14 @@ class HTML::Tag
     has Str  $.id    is rw;
     has Str  $.class is rw;
     has Str  $.style is rw;
+    has Str  $.name  is rw;
     
     method mktag(:$prefix, :$suffix = '>') {
 	my $tag;
 	$tag = $prefix if $prefix;
-	for $.attr.keys -> $a {
-	    $tag ~= " $a=\"{$.attr«$a»}\"" if $.attr«$a»;
-	}
+	$.attr.keys.map: { when 'checked' { $tag ~= ' checked' }
+			   default        { $tag ~= " $_=\"{$.attr«$_»}\"" };
+			 }
 	$tag ~= $suffix if $suffix;
 	return $tag;
     }
@@ -22,6 +23,7 @@ class HTML::Tag
 	$!attr<id>    = $!id    if $!id;
 	$!attr<class> = $!class if $!class;
 	$!attr<style> = $!style if $!style;
+	$!attr<name>  = $!name  if $!name;
     }
 }
 
