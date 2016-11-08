@@ -12,6 +12,7 @@ class HTML::Tag::a is HTML::Tag does HTML::Tag::generic-tag['a']
 	$.attr<target> = $.target if $.target;
     }
 }
+class HTML::Tag::body     is HTML::Tag does HTML::Tag::generic-tag['body'] {}
 class HTML::Tag::div      is HTML::Tag does HTML::Tag::generic-tag['div'] {}
 class HTML::Tag::fieldset is HTML::Tag::Form-tag does HTML::Tag::generic-tag['fieldset'] {}
 class HTML::Tag::form     is HTML::Tag::Form-tag does HTML::Tag::generic-tag['form']
@@ -25,6 +26,8 @@ class HTML::Tag::form     is HTML::Tag::Form-tag does HTML::Tag::generic-tag['fo
 	$.attr<method> = $.method if $.method;
    }	
 }
+class HTML::Tag::head is HTML::Tag does HTML::Tag::generic-tag['head'] {}
+class HTML::Tag::html is HTML::Tag does HTML::Tag::generic-tag['html'] {}
 class HTML::Tag::img  is HTML::Tag does HTML::Tag::generic-single-tag['img'] {
     has Str $.src    is rw is required;
     has Str $.alt    is rw;
@@ -59,6 +62,7 @@ class HTML::Tag::input is HTML::Tag::Form-tag does HTML::Tag::generic-single-tag
     }
 }
 class HTML::Tag::legend   is HTML::Tag::Form-tag does HTML::Tag::generic-tag['legend'] {}
+class HTML::Tag::li       is HTML::Tag does HTML::Tag::generic-tag['li'] {}
 class HTML::Tag::p        is HTML::Tag does HTML::Tag::generic-tag['p'] {}
 class HTML::Tag::span     is HTML::Tag does HTML::Tag::generic-tag['span'] {}
 class HTML::Tag::textarea is HTML::Tag::Form-tag does HTML::Tag::generic-tag['textarea']
@@ -72,3 +76,5 @@ class HTML::Tag::textarea is HTML::Tag::Form-tag does HTML::Tag::generic-tag['te
 	$.attr<cols> = $.cols if $.cols.defined;
     }
 }
+class HTML::Tag::title is HTML::Tag does HTML::Tag::generic-tag['title'] {}
+class HTML::Tag::ul    is HTML::Tag does HTML::Tag::generic-tag['ul'] {}
