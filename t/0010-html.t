@@ -2,7 +2,7 @@ use v6;
 use Test; 
 use lib <lib>;
 
-plan 19;
+plan 20;
 
 use-ok 'HTML::Tag::Tags', 'HTML::Tag::Tags can be use-d';
 use HTML::Tag::Tags;
@@ -29,7 +29,7 @@ is HTML::Tag::p.new(:text('test ', $tag), :id('myID')).render,
 is HTML::Tag::div.new(:text('My Div'), :style('funnyfont')).render, '<div style="funnyfont">My Div</div>', 'HTML::Tag::div works';
 is HTML::Tag::span.new(:text('My Span')).render, '<span>My Span</span>', 'HTML::Tag::span works';
 
-# FORM
+# Form
 is HTML::Tag::form.new(:action('/myscript/is') :id('myid')).render, '<form id="myid" action="/myscript/is"></form>', 'HTML::Tag::form works';
 is HTML::Tag::input.new(:value('testval'), :min(0)).render, '<input min="0" type="text" value="testval">', 'HTML::Tag::input works';
 is HTML::Tag::input.new(:type('radio'), :checked(True)).render, '<input checked type="radio">', 'HTML::Tag::input radio checked works';
@@ -48,6 +48,15 @@ is HTML::Tag::img.new(:src('/img/foo.jpg'),
 		      :width(100), :height(150),
 		      :alt('funny pic'),
 		      :border(0)).render, '<img height="150" alt="funny pic" border="0" width="100" src="/img/foo.jpg">', 'HTML::Tag::img works.';
+
+# Table
+my $th1 = HTML::Tag::th.new(:text('Col1'));
+my $th2 = HTML::Tag::th.new(:text('Col2'));
+my $tr1 = HTML::Tag::tr.new(:text($th1, $th2));
+my $td1 = HTML::Tag::td.new(:text('My data 1'), :class('italic'));
+my $td2 = HTML::Tag::td.new(:text('My data 2'), :class('italic'));
+my $tr2 = HTML::Tag::tr.new(:text($td1, $td2));
+is HTML::Tag::table.new(:text($tr1, $tr2)).render, '<table><tr><th>Col1</th><th>Col2</th></tr><tr><td class="italic">My data 1</td><td class="italic">My data 2</td></tr></table>', 'HTML::Tag::table works';
 
 # HTML, head, title and body
 my $title = HTML::Tag::title.new(:text('My Title'));

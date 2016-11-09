@@ -12,8 +12,8 @@ class HTML::Tag::a is HTML::Tag does HTML::Tag::generic-tag['a']
 	$.attr<target> = $.target if $.target;
     }
 }
-class HTML::Tag::body     is HTML::Tag does HTML::Tag::generic-tag['body'] {}
-class HTML::Tag::div      is HTML::Tag does HTML::Tag::generic-tag['div'] {}
+class HTML::Tag::body     is HTML::Tag           does HTML::Tag::generic-tag['body'] {}
+class HTML::Tag::div      is HTML::Tag           does HTML::Tag::generic-tag['div'] {}
 class HTML::Tag::fieldset is HTML::Tag::Form-tag does HTML::Tag::generic-tag['fieldset'] {}
 class HTML::Tag::form     is HTML::Tag::Form-tag does HTML::Tag::generic-tag['form']
 {
@@ -62,9 +62,13 @@ class HTML::Tag::input is HTML::Tag::Form-tag does HTML::Tag::generic-single-tag
     }
 }
 class HTML::Tag::legend   is HTML::Tag::Form-tag does HTML::Tag::generic-tag['legend'] {}
-class HTML::Tag::li       is HTML::Tag does HTML::Tag::generic-tag['li'] {}
-class HTML::Tag::p        is HTML::Tag does HTML::Tag::generic-tag['p'] {}
-class HTML::Tag::span     is HTML::Tag does HTML::Tag::generic-tag['span'] {}
+class HTML::Tag::li       is HTML::Tag           does HTML::Tag::generic-tag['li'] {}
+class HTML::Tag::p        is HTML::Tag           does HTML::Tag::generic-tag['p'] {}
+class HTML::Tag::span     is HTML::Tag           does HTML::Tag::generic-tag['span'] {}
+class HTML::Tag::table    is HTML::Tag           does HTML::Tag::generic-tag['table'] {}
+class HTML::Tag::td       is HTML::Tag           does HTML::Tag::generic-tag['td'] {}
+class HTML::Tag::th       is HTML::Tag           does HTML::Tag::generic-tag['th'] {}
+class HTML::Tag::tr       is HTML::Tag           does HTML::Tag::generic-tag['tr'] {}
 class HTML::Tag::textarea is HTML::Tag::Form-tag does HTML::Tag::generic-tag['textarea']
 {
     has Int $.rows is rw;
