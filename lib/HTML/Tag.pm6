@@ -31,6 +31,16 @@ class HTML::Tag
     }
 }
 
+class HTML::Tag::Table-tag is HTML::Tag
+{
+    has Int $.colspan is rw;
+
+    method do-assignments() {
+	callsame;
+	$.attr<colspan> = $.colspan if $.colspan.defined;
+    }
+}
+
 class HTML::Tag::Form-tag is HTML::Tag
 {
     has     $.disabled  is rw;
