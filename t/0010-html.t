@@ -2,12 +2,12 @@ use v6;
 use Test; 
 use lib <lib>;
 
-plan 20;
+plan 22;
 
 use-ok 'HTML::Tag::Tags', 'HTML::Tag::Tags can be use-d';
 use HTML::Tag::Tags;
-use-ok 'HTML::Tag::Macros', 'HTML::Tag::Macros can be use-d';
-use HTML::Tag::Macros;
+use-ok 'HTML::Tag::Macro', 'HTML::Tag::Macro can be use-d';
+use HTML::Tag::Macro;
 
 # P and class/id attributes
 is HTML::Tag::p.new(:text('testing & here')).render, '<p>testing &amp; here</p>', 'HTML::Tag::p works ok';
@@ -63,3 +63,24 @@ my $title = HTML::Tag::title.new(:text('My Title'));
 my $head  = HTML::Tag::head.new(:text($title));
 my $body  = HTML::Tag::body.new(:text('My page is here'));
 is HTML::Tag::html.new(:text($head, $body)).render, '<html><head><title>My Title</title></head><body>My page is here</body></html>', 'HTML::Tag::html, head, title and body work ok';
+
+# Table Macro
+my $table = HTML::Tag::Macro::Table.new;
+my @data = 'Col1', 'Col2', 'Col3';
+$table.row(:header(True), @data);
+@data = 11, 22, 33;
+$table.row(@data);
+is $table.render, '<table><tr><th>Col1</th><th>Col2</th><th>Col3</th></tr><tr><td>11</td><td>22</td><td>33</td></tr></table>', 'HTML::Tag::Macro::Table works';
+
+# Table Macro with options
+$table = HTML::Tag::Macro::Table.new;
+@data = 'Col1', 'Col2', 'Col3';
+$table.row(:header(True), @data);
+@data = 11, 22, 33;
+$table.row(@data);
+@data = 111, 222, 333;
+my $td-opts = {1 => {class => 'pretty'},
+	       2 => {class => 'pretty', id => 'lastone'}};
+
+$table.row(:td-opts($td-opts), @data);
+is $table.render, '<table><tr><th>Col1</th><th>Col2</th><th>Col3</th></tr><tr><td>11</td><td>22</td><td>33</td></tr><tr><td>111</td><td class="pretty">222</td><td id="lastone" class="pretty">333</td></tr></table>', 'HTML::Tag::Macro::Table works with td-opts';
