@@ -13,7 +13,7 @@ class HTML::Tag::Macro::CSS
 
 class HTML::Tag::Macro::Table
 {
-    has     @.rows is rw;
+    has @.rows is rw;
 
     method row(Bool :$header = False, :$td-opts, *@cols) {
 	my @col-objects;
