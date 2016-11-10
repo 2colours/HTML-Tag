@@ -30,4 +30,61 @@ their :text by passing alternating string text and tag objects as a
 list. Tag objects passed this way I<should not> have C<.render> called
 on them first to avoid the HTML special characters being escaped.
 
+=head1 TAGS
+
+=head1 MACROS
+
+=head2 HTML::Tag::Macro::CSS
+
+Renders a normal CSS file link that can be wrapped into a html head element:
+
+HTML::Tag::Macro::CSS.new(:href('/css/mycssfile.css')).render;
+
+
+=head2 HTML::Tag::Macro::Table
+
+A HTML::Tag::Macro::Table object gets fed rows one after the
+other. These rows contain arrays of data that will be surrounded by
+td's.
+
+  =begin code
+  my $table = HTML::Tag::Macro::Table.new;
+  my @data = $var1, $var2, $var3;
+  $table.row(@data);
+  @data = $var4, $var5, $var6;
+  $table.row(@data);
+  $table.render;
+  =end code
+
+The .row method takes Bool :$header which will generated th tags
+instead of td tags for each array element (representing a table header
+row).
+
+The .row method takes Hash :$tr-opts which will apply normal
+HTML::Tag::tr options to that row, as specified in :$tr-opts.
+
+The .row method takes Hash :$td-opts which will apply normal
+HTML::Tag::td options to td tags that are generated for that
+row. B<$td-opts is keyed by the td array element> (see td-opts example
+code below).
+
+  =begin code
+  $table = HTML::Tag::Macro::Table.new(:table-opts(id =>'myID'));
+  @data = 'Col1', 'Col2', 'Col3';
+  $table.row(:header(True), @data);
+  @data = 11, 22, 33;
+  $table.row(@data);
+  @data = 111, 222, 333;
+  my $td-opts = %(1 => {class => 'pretty'},
+                  2 => {class => 'pretty',
+                        id    => 'lastone'});
+  $table.row(:td-opts($td-opts), @data);
+  =end code
+
+As you can see the new constructor takes :$table-opts that will be
+passed along to the normal HTML::Tag::table object.
+
+NO CHECKING IS PERFORMED FOR A CONSISTENT NUMBER OF ELEMENTS IN EACH
+ROW
+
 =end pod

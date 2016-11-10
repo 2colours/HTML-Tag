@@ -7,7 +7,7 @@
     "provides" : {
 	"HTML::Tag"         : "lib/HTML/Tag.pm6",
 	"HTML::Tag::Tags"   : "lib/HTML/Tag/Tags.pm6",
-	"HTML::Tag::Macros" : "lib/HTML/Tag/Macros.pm6",
+	"HTML::Tag::Macro"  : "lib/HTML/Tag/Macro.pm6",
     },
     "depends" : [ "HTML::Entity" ],
     "resources" : [ ],
