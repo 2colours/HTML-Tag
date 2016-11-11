@@ -2,7 +2,7 @@ use v6;
 use Test; 
 use lib <lib>;
 
-plan 23;
+plan 24;
 
 use-ok 'HTML::Tag::Tags', 'HTML::Tag::Tags can be use-d';
 use HTML::Tag::Tags;
@@ -17,6 +17,9 @@ is HTML::Tag::p.new(:text('test'), :class('MYClass'), :id('myNAME')).render, '<p
 
 # Anchor
 is HTML::Tag::a.new(:text('My Page'), :href('http://mydomain.com')).render, '<a href="http://mydomain.com">My Page</a>', 'HTML::Tag::a works';
+
+# Link
+is HTML::Tag::link.new(:href('http://mydomain.com'), :rel('stylesheet'), :type('text/css')).render, '<link rel="stylesheet" href="http://mydomain.com" type="text/css">', 'HTML::Tag::link works';
 
 # Swallowing another tag
 my $tag = HTML::Tag::a.new(:text('My Page'),

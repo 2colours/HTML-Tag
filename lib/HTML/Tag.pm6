@@ -36,12 +36,14 @@ class HTML::Tag::Link-tag is HTML::Tag
     has Str $.href is rw;
     has Str $.target is rw;
     has Str $.rel is rw;
+    has Str $.type is rw;
 
     method do-assignments() {
 	callsame;
 	$.attr<href>   = $.href   if $.href;
 	$.attr<target> = $.target if $.target;
-	$.attr<rel>    = $.target if $.rel;
+	$.attr<rel>    = $.rel    if $.rel;
+	$.attr<type>   = $.type   if $.type;
     }
 }
 
