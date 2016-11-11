@@ -81,7 +81,7 @@ role HTML::Tag::generic-tag[$T]
     method render() {
 	self.do-assignments;
 	my $tag = self.mktag(:prefix("<$T"));
-	@.text.map: { $tag ~= $_ ~~ HTML::Tag ?? $_.render !! encode-entities($_) };
+	@.text.map: { $tag ~= $_.^name ~~ /HTML\:\:Tag/ ?? $_.render !! encode-entities($_) };
 	return $tag ~ "</$T>";
     }
 }
