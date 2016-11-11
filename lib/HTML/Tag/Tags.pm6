@@ -1,17 +1,7 @@
 use v6;
 use HTML::Tag;
 
-class HTML::Tag::a is HTML::Tag does HTML::Tag::generic-tag['a']
-{
-    has Str $.href is rw;
-    has Str $.target is rw;
-
-    method do-assignments() {
-	callsame;
-	$.attr<href>   = $.href   if $.href;
-	$.attr<target> = $.target if $.target;
-    }
-}
+class HTML::Tag::a        is HTML::Tag::Link-tag does HTML::Tag::generic-tag['a'] {}
 class HTML::Tag::body     is HTML::Tag           does HTML::Tag::generic-tag['body'] {}
 class HTML::Tag::div      is HTML::Tag           does HTML::Tag::generic-tag['div'] {}
 class HTML::Tag::fieldset is HTML::Tag::Form-tag does HTML::Tag::generic-tag['fieldset'] {}
@@ -63,6 +53,7 @@ class HTML::Tag::input is HTML::Tag::Form-tag does HTML::Tag::generic-single-tag
 }
 class HTML::Tag::legend   is HTML::Tag::Form-tag  does HTML::Tag::generic-tag['legend'] {}
 class HTML::Tag::li       is HTML::Tag            does HTML::Tag::generic-tag['li'] {}
+class HTML::Tag::link     is HTML::Tag::Link-tag  does HTML::Tag::generic-single-tag['link'] {}
 class HTML::Tag::p        is HTML::Tag            does HTML::Tag::generic-tag['p'] {}
 class HTML::Tag::span     is HTML::Tag            does HTML::Tag::generic-tag['span'] {}
 class HTML::Tag::table    is HTML::Tag            does HTML::Tag::generic-tag['table'] {}

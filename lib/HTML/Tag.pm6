@@ -31,6 +31,20 @@ class HTML::Tag
     }
 }
 
+class HTML::Tag::Link-tag is HTML::Tag
+{
+    has Str $.href is rw;
+    has Str $.target is rw;
+    has Str $.rel is rw;
+
+    method do-assignments() {
+	callsame;
+	$.attr<href>   = $.href   if $.href;
+	$.attr<target> = $.target if $.target;
+	$.attr<rel>    = $.target if $.rel;
+    }
+}
+
 class HTML::Tag::Table-tag is HTML::Tag
 {
     has Int $.colspan is rw;
