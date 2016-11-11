@@ -31,6 +31,6 @@ class HTML::Tag::Macro::Table
     }
 
     method render() {
-	return HTML::Tag::table.new(:text(|@!rows), |$!table-opts).render;
+	HTML::Tag::table.new(:text(|@!rows), |$!table-opts).render;
     }
 }
