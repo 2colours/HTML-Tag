@@ -2,12 +2,12 @@ use v6;
 use HTML::Tag;
 use HTML::Tag::Tags;
 
-class HTML::Tag::Macro::CSS
+class HTML::Tag::Macro::CSS is HTML::Tag::link
 {
-    has Str $.href is required;
-
-    method render() {
-	return "<link rel=\"stylesheet\" type=\"text/css\" href=\"$!href\">";
+    method do-assignments() {
+	callsame;
+	$.attr<rel>  = $.rel  || 'stylesheet';
+	$.attr<type> = $.type || 'text/css';
     }
 }
 

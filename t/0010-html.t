@@ -44,7 +44,7 @@ is HTML::Tag::fieldset.new(:form('myform'), :text($legend, $tag)).render, '<fiel
 
 # CSS Macro
 is HTML::Tag::Macro::CSS.new(:href('css/file.css')).render,
-'<link rel="stylesheet" type="text/css" href="css/file.css">', 'HTML::Tag::Macro:CSS works';
+'<link rel="stylesheet" href="css/file.css" type="text/css">', 'HTML::Tag::Macro:CSS works';
 
 # Image
 is HTML::Tag::img.new(:src('/img/foo.jpg'),
