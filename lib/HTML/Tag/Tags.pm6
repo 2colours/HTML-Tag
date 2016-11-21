@@ -58,6 +58,15 @@ class HTML::Tag::input is HTML::Tag::Form-tag does HTML::Tag::generic-single-tag
 	$.attr<alt>     = $.alt     if $.alt.defined;
     }
 }
+class HTML::Tag::label is HTML::Tag does HTML::Tag::generic-tag['label']
+{
+    has $.for is rw;
+
+    method do-assignments() {
+	callsame;
+	$.attr<for> = $.for if $.for;
+    }
+}
 class HTML::Tag::legend   is HTML::Tag::Form-tag  does HTML::Tag::generic-tag['legend'] {}
 class HTML::Tag::li       is HTML::Tag            does HTML::Tag::generic-tag['li'] {}
 class HTML::Tag::link     is HTML::Tag::Link-tag  does HTML::Tag::generic-single-tag['link'] {}
