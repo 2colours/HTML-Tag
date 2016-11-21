@@ -24,10 +24,10 @@ class HTML::Tag
     }
 
     method do-assignments() {
-	$!attr<id>    = $!id    if $!id;
-	$!attr<class> = $!class if $!class;
-	$!attr<style> = $!style if $!style;
-	$!attr<name>  = $!name  if $!name;
+	$.attr<id>    = $!id    if $!id;
+	$.attr<class> = $!class if $!class;
+	$.attr<style> = $!style if $!style;
+	$.attr<name>  = $!name  if $!name;
     }
 }
 
@@ -65,7 +65,7 @@ class HTML::Tag::Form-tag is HTML::Tag
     has     $.autofocus is rw;
     has Int $.maxlength is rw;
     has Int $.size      is rw;
-    has Str $.value     is rw;
+    has     $.value     is rw;
     has Str $.form      is rw;
 
     method do-assignments() {

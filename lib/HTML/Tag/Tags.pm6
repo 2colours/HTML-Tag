@@ -8,7 +8,7 @@ class HTML::Tag::fieldset is HTML::Tag::Form-tag does HTML::Tag::generic-tag['fi
 class HTML::Tag::form     is HTML::Tag::Form-tag does HTML::Tag::generic-tag['form']
 {
     has Str $.action is rw;
-    has Str $.method is rw;
+    has Str $.method is rw = 'POST';
 
     method do-assignments() {
 	callsame;
@@ -16,9 +16,16 @@ class HTML::Tag::form     is HTML::Tag::Form-tag does HTML::Tag::generic-tag['fo
 	$.attr<method> = $.method if $.method;
    }	
 }
+class HTML::Tag::h1   is HTML::Tag does HTML::Tag::generic-tag['h1'] {}
+class HTML::Tag::h2   is HTML::Tag does HTML::Tag::generic-tag['h2'] {}
+class HTML::Tag::h3   is HTML::Tag does HTML::Tag::generic-tag['h3'] {}
+class HTML::Tag::h4   is HTML::Tag does HTML::Tag::generic-tag['h4'] {}
+class HTML::Tag::h5   is HTML::Tag does HTML::Tag::generic-tag['h5'] {}
+class HTML::Tag::h6   is HTML::Tag does HTML::Tag::generic-tag['h6'] {}
 class HTML::Tag::head is HTML::Tag does HTML::Tag::generic-tag['head'] {}
 class HTML::Tag::html is HTML::Tag does HTML::Tag::generic-tag['html'] {}
-class HTML::Tag::img  is HTML::Tag does HTML::Tag::generic-single-tag['img'] {
+class HTML::Tag::img  is HTML::Tag does HTML::Tag::generic-single-tag['img']
+{
     has Str $.src    is rw is required;
     has Str $.alt    is rw;
     has Int $.width  is rw;
