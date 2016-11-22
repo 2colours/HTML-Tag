@@ -66,7 +66,7 @@ class HTML::Tag::Form-tag is HTML::Tag
     has Int $.maxlength is rw;
     has Int $.size      is rw;
     has     $.value     is rw;
-    has Str $.form      is rw;
+    has     $.form      is rw;
 
     method do-assignments() {
 	callsame;
