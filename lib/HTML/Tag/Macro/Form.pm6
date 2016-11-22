@@ -3,11 +3,12 @@ use HTML::Tag::Tags;
 
 class HTML::Tag::Macro::Form
 {
-    has @.def is rw;
-    has %.input is rw;
-    has $.form-name is rw = 'form';
-    has $.action is rw;
-    has $.id     is rw;
+    has $.form-name    is rw = 'form';
+    has @.def          is rw;
+    has %.input        is rw;
+    has $.action       is rw;
+    has $.id           is rw;
+    has Bool $.nolabel is rw = False;
 
     method render() {
 	my @elements;
@@ -31,7 +32,7 @@ class HTML::Tag::Macro::Form
 
 	    my $tag = HTML::Tag::input.new(|%tagdef);
 	    
-	    if %def<nolabel>:exists {
+	    if $.nolabel | %def<nolabel>:exists {
 		@elements.push: $tag;
 	    } else {
 		my $label = %def<label>:exists ?? %def<label> !! $name.tc;
