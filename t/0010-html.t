@@ -2,7 +2,7 @@ use v6;
 use Test; 
 use lib <lib>;
 
-plan 24;
+plan 31;
 
 use-ok 'HTML::Tag::Tags', 'HTML::Tag::Tags can be use-d';
 use HTML::Tag::Tags;
@@ -27,13 +27,19 @@ my $tag = HTML::Tag::a.new(:text('My Page'),
 is HTML::Tag::p.new(:text('test ', $tag), :id('myID')).render,
 	            '<p id="myID">test <a href="http://mydomain.com">My Page</a></p>', 'HTML::Tag swallowing other tags works';
 
+# Header tags
+for 1..6 -> $i {
+    my $m = "h$i";
+    $tag = HTML::Tag::{$m}.new(:text('test'));
+    is $tag.render, "\<h$i\>test\</h$i\>", "HTML::Tag::$m works";
+}
 
 # DIV & SPAN
 is HTML::Tag::div.new(:text('My Div'), :style('funnyfont')).render, '<div style="funnyfont">My Div</div>', 'HTML::Tag::div works';
 is HTML::Tag::span.new(:text('My Span')).render, '<span>My Span</span>', 'HTML::Tag::span works';
 
 # Form
-is HTML::Tag::form.new(:action('/myscript/is') :id('myid')).render, '<form id="myid" action="/myscript/is"></form>', 'HTML::Tag::form works';
+is HTML::Tag::form.new(:action('/myscript/is') :id('myid')).render, '<form method="POST" id="myid" action="/myscript/is"></form>', 'HTML::Tag::form works';
 is HTML::Tag::input.new(:value('testval'), :min(0)).render, '<input min="0" type="text" value="testval">', 'HTML::Tag::input works';
 is HTML::Tag::input.new(:type('radio'), :checked(True)).render, '<input checked type="radio">', 'HTML::Tag::input radio checked works';
 is HTML::Tag::textarea.new(:text('This is in the box'), :id('boxy')).render, '<textarea id="boxy">This is in the box</textarea>', 'HTML::Tag::textarea works';
@@ -70,10 +76,18 @@ is HTML::Tag::html.new(:text($head, $body)).render, '<html><head><title>My Title
 # Table Macro
 my $table = HTML::Tag::Macro::Table.new;
 my @data = 'Col1', 'Col2', 'Col3';
-$table.row(:header(True), @data);
+$table.row(:header, @data);
 @data = 11, 22, 33;
 $table.row(@data);
 is $table.render, '<table><tr><th>Col1</th><th>Col2</th><th>Col3</th></tr><tr><td>11</td><td>22</td><td>33</td></tr></table>', 'HTML::Tag::Macro::Table works';
+
+# Table Macro using rows()
+$table = HTML::Tag::Macro::Table.new;
+@data = 'Col1', 'Col2', 'Col3';
+$table.row(:header, @data);
+@data = ((11, 22, 33), (44, 55, 66));
+$table.rows(@data);
+is $table.render, '<table><tr><th>Col1</th><th>Col2</th><th>Col3</th></tr><tr><td>11</td><td>22</td><td>33</td></tr><tr><td>44</td><td>55</td><td>66</td></tr></table>', 'HTML::Tag::Macro::Table works with rows()';
 
 # Table Macro with td options
 $table = HTML::Tag::Macro::Table.new;
