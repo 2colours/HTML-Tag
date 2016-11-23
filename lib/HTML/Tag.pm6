@@ -4,10 +4,10 @@ use HTML::Entity;
 class HTML::Tag
 {
     has Hash $.attr  is rw = {};
-    has Str  $.id    is rw;
-    has Str  $.class is rw;
-    has Str  $.style is rw;
-    has Str  $.name  is rw;
+    has      $.id    is rw;
+    has      $.class is rw;
+    has      $.style is rw;
+    has      $.name  is rw;
     
     method mktag(:$prefix, :$suffix = '>') {
 	my $tag;
@@ -17,7 +17,7 @@ class HTML::Tag
 			   when 'readonly'  { $tag ~= ' readonly' }
 			   when 'required'  { $tag ~= ' required' }
 			   when 'autofocus' { $tag ~= ' autofocus' }
-			   default          { $tag ~= " $_=\"{$.attr«$_»}\"" };
+			   default          { $tag ~= " $_=\"{$.attr{$_}}\"" };
 			 }
 	$tag ~= $suffix if $suffix;
 	return $tag;
@@ -33,10 +33,10 @@ class HTML::Tag
 
 class HTML::Tag::Link-tag is HTML::Tag
 {
-    has Str $.href is rw;
-    has Str $.target is rw;
-    has Str $.rel is rw;
-    has Str $.type is rw;
+    has $.href is rw;
+    has $.target is rw;
+    has $.rel is rw;
+    has $.type is rw;
 
     method do-assignments() {
 	callsame;

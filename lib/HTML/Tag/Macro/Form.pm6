@@ -16,33 +16,35 @@ class HTML::Tag::Macro::Form
 	    my $name   = $element.keys.first;
 	    my %def    = $element{$name};
 	    my %tagdef = ();
-	    %tagdef<name>  = $name;
+
+	    %tagdef<name>  = %def<name>:exists ?? %def<name> !! $name;
+
 	    %tagdef<id>    = "{$.form-name}\-$name";
 	    %tagdef<class> = %def<class> if %def<class>:exists;
 	    %tagdef<type>  = %def<type>  if %def<type>:exists;
 
 	    # Process input variables
-	    my $var = %def<var>:exists ?? %def<var> !! $name;
+	    my $var = %def<var>:exists ?? %def<var> !! %tagdef<name>;
 	    if (%def<value>:exists) {
 		%tagdef<value> = %def<value>;
 	    }
-	    elsif (%.input and %.input«$var»:exists) {
-		%tagdef<value> = %.input«$var»;
+	    elsif (%.input and %.input{$var}:exists) {
+		%tagdef<value> = %.input{$var};
 	    }
 
 	    my $tag = HTML::Tag::input.new(|%tagdef);
 	    
-	    if $.nolabel | %def<nolabel>:exists {
+	    if $.nolabel or %def<nolabel>:exists {
 		@elements.push: $tag;
 	    } else {
-		my $label = %def<label>:exists ?? %def<label> !! $name.tc;
+		my $label = %def<label>:exists ?? %def<label> !! %tagdef<name>.tc;
 		@elements.push: HTML::Tag::label.new(:text($label, $tag));
 	    }
 	}
 	my $form = HTML::Tag::form.new(:name($.form-name),
 				       :text(@elements));
-	$form.action = $.action if $.action;
-	$form.id     = $.id     if $.id;
+	$form.action = $.action;
+	$form.id     = $.id;
 	$form.render;
     }
 }
@@ -121,6 +123,12 @@ Defines the HTML id attribute for the form tag.
 
 Defines a key/val hash that represents values submitted to the form.
 
+=head2 :nolabel
+
+When present disallows the creation of named labels around all
+elements. Elements also have per-element label control defined in the
+for @def.
+
 =head2 @def
 
 Defines the array of hashes that define each form element.
@@ -153,6 +161,29 @@ the key in the C<%input> hash.
 If you need to get your input from a different C<%input> key than the
 same-named one, you can specify the C<var> option for the element with
 the C<%input> key you would like to associate with it.
+
+=head2 Options for each key defined in @def
+
+=item C<name> - name defaults to the I<key name> for the element
+defined in @def. Specifying name here overrides this. Also overrides
+the default C<var> name looked for in any %input provided.
+
+=item C<class> - specifies the element's HTML class.
+
+=item C<id> - specifies the element's HTML id.
+
+=item C<type> - specifies the text input's type (such as "submit").
+
+=item C<nolabel> - if set to anything, renders no label for this element.
+
+=item C<label> - sets the label to the string provided, instead of
+using the default label, which is a titlecase version of C<name>.
+											       
+=item C<value> - manually sets the value for the element. This will
+override any value obtained by processing %input.
+
+=item C<var> - the %input key name to use, to assign C<value>
+automatically. This defaults to C<name>.
 
 =head1 METHODS
 
