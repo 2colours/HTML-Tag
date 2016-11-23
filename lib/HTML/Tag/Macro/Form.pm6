@@ -21,15 +21,19 @@ class HTML::Tag::Macro::Form
 
 	    %tagdef<id>    = "{$.form-name}\-$name";
 	    %tagdef<class> = %def<class> if %def<class>:exists;
-	    %tagdef<type>  = %def<type>  if %def<type>:exists;
+	    %tagdef<type>  = (%def<type> if %def<type>:exists) || 'text';
 
 	    # Process input variables
 	    my $var = %def<var>:exists ?? %def<var> !! %tagdef<name>;
 	    if (%def<value>:exists) {
-		%tagdef<value> = %def<value>;
+		unless %tagdef<type> eq 'password' {
+		    %tagdef<value> = %def<value>;
+		}
 	    }
 	    elsif (%.input and %.input{$var}:exists) {
-		%tagdef<value> = %.input{$var};
+		unless %tagdef<type> eq 'password' {
+		    %tagdef<value> = %.input{$var};
+		}
 	    }
 
 	    my $tag = HTML::Tag::input.new(|%tagdef);
@@ -172,7 +176,9 @@ the default C<var> name looked for in any %input provided.
 
 =item C<id> - specifies the element's HTML id.
 
-=item C<type> - specifies the text input's type (such as "submit").
+=item C<type> - specifies the text input's type (such as "submit"). If
+the type is "password" no value attribute will ever be printed for the
+tag.
 
 =item C<nolabel> - if set to anything, renders no label for this element.
 

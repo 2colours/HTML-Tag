@@ -2,7 +2,7 @@ use v6;
 use Test; 
 use lib <lib>;
 
-plan 9;
+plan 11;
 
 use-ok 'HTML::Tag::Tags', 'HTML::Tag::Tags can be use-d';
 use HTML::Tag::Tags;
@@ -42,3 +42,18 @@ my %input;
 ok $form = HTML::Tag::Macro::Form.new(:input(%input), :def(@def), :action('/')), 'HTML::Tag::Macro::Form input values instatiate';
 
 is $form.render, '<form method="POST" name="form" action="/"><label>Username<input name="username" id="form-username" type="text" value="mark"></label><label>Password<input name="password" id="form-password" type="text"></label><input name="submit" id="form-submit" type="submit" value="Login"></form>', 'HTML::Tag::Macro::Form with value test';
+
+@def = ( { username => { }},
+	 { password => { type => 'password' }},
+	 { submit   => { type    => 'submit',
+			 value   => 'Login',
+			 nolabel => 1 }},
+       );
+
+%input<username> = 'mark';
+%input<password> = 'supersecret';
+
+ok $form = HTML::Tag::Macro::Form.new(:input(%input), :def(@def), :action('/')), 'HTML::Tag::Macro::Form input values instatiate for pw test';
+
+is $form.render, '<form method="POST" name="form" action="/"><label>Username<input name="username" id="form-username" type="text" value="mark"></label><label>Password<input name="password" id="form-password" type="password"></label><input name="submit" id="form-submit" type="submit" value="Login"></form>', 'HTML::Tag::Macro::Form with value test password types set no values';
+
