@@ -17,6 +17,7 @@ class HTML::Tag
 			   when 'readonly'  { $tag ~= ' readonly' }
 			   when 'required'  { $tag ~= ' required' }
 			   when 'autofocus' { $tag ~= ' autofocus' }
+			   when 'value'     { $tag ~= " $_=\"{encode-entities($.attr{$_})}\"" } 
 			   default          { $tag ~= " $_=\"{$.attr{$_}}\"" };
 			 }
 	$tag ~= $suffix if $suffix;
