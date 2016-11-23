@@ -23,7 +23,7 @@ is $form.render, '<form method="POST" name="form" action="/"><input name="userna
 
 ok $form = HTML::Tag::Macro::Form.new(:def(@def), :action('/')), 'HTML::Tag::Macro::Form def passed directly in';
 
-is $form.render, '<form method="POST" name="form" action="/"><label>Username<input name="username" id="form-username" type="text"></label><label>Password<input name="password" id="form-password" type="text"></label><label>Submit<input name="submit" id="form-submit" type="submit" value="Login"></label></form>', 'HTML::Tag::Macro::Form with labels';
+is $form.render, '<form method="POST" name="form" action="/"><label for="form-username">Username</label><input name="username" id="form-username" type="text"><label for="form-password">Password</label><input name="password" id="form-password" type="text"><label for="form-submit">Submit</label><input name="submit" id="form-submit" type="submit" value="Login"></form>', 'HTML::Tag::Macro::Form with labels';
 
 @def = ( { username => { }},
 	 { password => { }},
@@ -34,14 +34,14 @@ is $form.render, '<form method="POST" name="form" action="/"><label>Username<inp
 
 $form.def = @def;
 
-is $form.render, '<form method="POST" name="form" action="/"><label>Username<input name="username" id="form-username" type="text"></label><label>Password<input name="password" id="form-password" type="text"></label><input name="submit" id="form-submit" type="submit" value="Login"></form>', 'HTML::Tag::Macro::Form with labels excluding one';
+is $form.render, '<form method="POST" name="form" action="/"><label for="form-username">Username</label><input name="username" id="form-username" type="text"><label for="form-password">Password</label><input name="password" id="form-password" type="text"><input name="submit" id="form-submit" type="submit" value="Login"></form>', 'HTML::Tag::Macro::Form with labels excluding one';
 
 my %input;
 %input<username> = 'mark';
 
-ok $form = HTML::Tag::Macro::Form.new(:input(%input), :def(@def), :action('/')), 'HTML::Tag::Macro::Form input values instatiate';
+ok $form = HTML::Tag::Macro::Form.new(:nolabel, :input(%input), :def(@def), :action('/')), 'HTML::Tag::Macro::Form input values instatiate';
 
-is $form.render, '<form method="POST" name="form" action="/"><label>Username<input name="username" id="form-username" type="text" value="mark"></label><label>Password<input name="password" id="form-password" type="text"></label><input name="submit" id="form-submit" type="submit" value="Login"></form>', 'HTML::Tag::Macro::Form with value test';
+is $form.render, '<form method="POST" name="form" action="/"><input name="username" id="form-username" type="text" value="mark"><input name="password" id="form-password" type="text"><input name="submit" id="form-submit" type="submit" value="Login"></form>', 'HTML::Tag::Macro::Form with value test';
 
 @def = ( { username => { }},
 	 { password => { type => 'password' }},
@@ -55,5 +55,5 @@ is $form.render, '<form method="POST" name="form" action="/"><label>Username<inp
 
 ok $form = HTML::Tag::Macro::Form.new(:input(%input), :def(@def), :action('/')), 'HTML::Tag::Macro::Form input values instatiate for pw test';
 
-is $form.render, '<form method="POST" name="form" action="/"><label>Username<input name="username" id="form-username" type="text" value="mark"></label><label>Password<input name="password" id="form-password" type="password"></label><input name="submit" id="form-submit" type="submit" value="Login"></form>', 'HTML::Tag::Macro::Form with value test password types set no values';
+is $form.render, '<form method="POST" name="form" action="/"><label for="form-username">Username</label><input name="username" id="form-username" type="text" value="mark"><label for="form-password">Password</label><input name="password" id="form-password" type="password"><input name="submit" id="form-submit" type="submit" value="Login"></form>', 'HTML::Tag::Macro::Form with value test password types set no values';
 

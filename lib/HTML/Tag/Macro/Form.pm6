@@ -42,7 +42,7 @@ class HTML::Tag::Macro::Form
 		@elements.push: $tag;
 	    } else {
 		my $label = %def<label>:exists ?? %def<label> !! %tagdef<name>.tc;
-		@elements.push: HTML::Tag::label.new(:text($label, $tag));
+		@elements.push: HTML::Tag::label.new(:for(%tagdef<id>), :text($label)), $tag;
 	    }
 	}
 	my $form = HTML::Tag::form.new(:name($.form-name),
