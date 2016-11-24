@@ -25,6 +25,7 @@ class HTML::Tag::h5   is HTML::Tag does HTML::Tag::generic-tag['h5'] {}
 class HTML::Tag::h6   is HTML::Tag does HTML::Tag::generic-tag['h6'] {}
 class HTML::Tag::head is HTML::Tag does HTML::Tag::generic-tag['head'] {}
 class HTML::Tag::html is HTML::Tag does HTML::Tag::generic-tag['html'] {}
+class HTML::Tag::hr   is HTML::Tag does HTML::Tag::generic-single-tag['hr'] {}
 class HTML::Tag::img  is HTML::Tag does HTML::Tag::generic-single-tag['img']
 {
     has Str $.src    is rw is required;
