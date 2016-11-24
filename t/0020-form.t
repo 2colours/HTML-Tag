@@ -2,7 +2,7 @@ use v6;
 use Test; 
 use lib <lib>;
 
-plan 11;
+plan 15;
 
 use-ok 'HTML::Tag::Tags', 'HTML::Tag::Tags can be use-d';
 use HTML::Tag::Tags;
@@ -56,4 +56,30 @@ is $form.render, '<form method="POST" name="form" action="/"><input name="userna
 ok $form = HTML::Tag::Macro::Form.new(:input(%input), :def(@def), :action('/')), 'HTML::Tag::Macro::Form input values instatiate for pw test';
 
 is $form.render, '<form method="POST" name="form" action="/"><label for="form-username">Username</label><input name="username" id="form-username" type="text" value="mark"><label for="form-password">Password</label><input name="password" id="form-password" type="password"><input name="submit" id="form-submit" type="submit" value="Login"></form>', 'HTML::Tag::Macro::Form with value test password types set no values';
+
+my $tag-after = HTML::Tag::br.new;
+my $tag-before = HTML::Tag::span.new(:text('oofie'));
+
+@def = ( { username => { tag-after => $tag-after }},
+	 { password => { type => 'password' }},
+	 { submit   => { type    => 'submit',
+			 value   => 'Login',
+			 nolabel => 1,
+			 tag-before => $tag-before }},
+       );
+
+ok $form = HTML::Tag::Macro::Form.new(:input(%input), :def(@def), :action('/')), 'HTML::Tag::Macro::Form input values instatiate for tags before/after';
+
+is $form.render, '<form method="POST" name="form" action="/"><label for="form-username">Username</label><input name="username" id="form-username" type="text" value="mark"><br><label for="form-password">Password</label><input name="password" id="form-password" type="password"><span>oofie</span><input name="submit" id="form-submit" type="submit" value="Login"></form>', 'HTML::Tag::Macro::Form testing before/after tags';
+
+@def = ( { username => { swallowed-by => $tag-before }},
+	 { password => { type => 'password' }},
+	 { submit   => { type    => 'submit',
+			 value   => 'Login',
+			 nolabel => 1 }},
+       );
+
+ok $form = HTML::Tag::Macro::Form.new(:input(%input), :def(@def), :action('/')), 'HTML::Tag::Macro::Form input values instatiate for input swallowing';
+
+is $form.render, '<form method="POST" name="form" action="/"><span>oofie<label for="form-username">Username</label><input name="username" id="form-username" type="text" value="mark"></span><label for="form-password">Password</label><input name="password" id="form-password" type="password"><input name="submit" id="form-submit" type="submit" value="Login"></form>', 'HTML::Tag::Macro::Form with value test password types set no values';
 

@@ -2,6 +2,7 @@ use v6;
 use HTML::Tag;
 
 class HTML::Tag::a        is HTML::Tag::Link-tag does HTML::Tag::generic-tag['a'] {}
+class HTML::Tag::br       is HTML::Tag           does HTML::Tag::generic-single-tag['br'] {}
 class HTML::Tag::body     is HTML::Tag           does HTML::Tag::generic-tag['body'] {}
 class HTML::Tag::div      is HTML::Tag           does HTML::Tag::generic-tag['div'] {}
 class HTML::Tag::fieldset is HTML::Tag::Form-tag does HTML::Tag::generic-tag['fieldset'] {}

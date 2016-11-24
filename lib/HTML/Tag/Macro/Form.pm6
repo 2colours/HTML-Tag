@@ -37,13 +37,23 @@ class HTML::Tag::Macro::Form
 	    }
 
 	    my $tag = HTML::Tag::input.new(|%tagdef);
-	    
+	    @elements.push: %def<tag-before> if %def<tag-before>;
+
+	    my @interim-tag = ();
 	    if $.nolabel or %def<nolabel>:exists {
-		@elements.push: $tag;
+		@interim-tag.push: $tag;
 	    } else {
 		my $label = %def<label>:exists ?? %def<label> !! %tagdef<name>.tc;
-		@elements.push: HTML::Tag::label.new(:for(%tagdef<id>), :text($label)), $tag;
+		@interim-tag.push: HTML::Tag::label.new(:for(%tagdef<id>), :text($label)), $tag;
 	    }
+	    if (%def<swallowed-by>) {
+		%def<swallowed-by>.text.push: |@interim-tag;
+		@elements.push: %def<swallowed-by>;
+	    } else {
+		@elements.push: |@interim-tag;
+	    }
+
+	    @elements.push: %def<tag-after> if %def<tag-after>;
 	}
 	my $form = HTML::Tag::form.new(:name($.form-name),
 				       :text(@elements));
@@ -190,6 +200,17 @@ override any value obtained by processing %input.
 
 =item C<var> - the %input key name to use, to assign C<value>
 automatically. This defaults to C<name>.
+
+=item C<tag-after> - HTML::Tag to be inserted directly I<after> this
+element.
+
+=item C<tag-before> - HTML::Tag to be inserted directly I<before> this
+element.
+
+=item C<swallowed-by> - Provide another HTML::Tag that will swallow up
+the element (surround it, like a <span></span>). If labels are being
+rendered for the element, those also are swallowed. Also, before and
+after happen outside of the swallow.
 
 =head1 METHODS
 
