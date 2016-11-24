@@ -19,9 +19,10 @@ class HTML::Tag::Macro::Form
 
 	    %tagdef<name>  = %def<name>:exists ?? %def<name> !! $name;
 
-	    %tagdef<id>    = "{$.form-name}\-$name";
-	    %tagdef<class> = %def<class> if %def<class>:exists;
-	    %tagdef<type>  = (%def<type> if %def<type>:exists) || 'text';
+	    %tagdef<id>       = "{$.form-name}\-$name";
+	    %tagdef<class>    = %def<class> if %def<class>:exists;
+	    %tagdef<type>     = (%def<type> if %def<type>:exists) || 'text';
+	    %tagdef<required> = True if %def<required>;
 
 	    # Process input variables
 	    my $var = %def<var>:exists ?? %def<var> !! %tagdef<name>;
@@ -211,6 +212,10 @@ element.
 the element (surround it, like a <span></span>). If labels are being
 rendered for the element, those also are swallowed. Also, before and
 after happen outside of the swallow.
+
+=item C<required> - Marks the tag as required, which modern browsers
+will recognize and enforce, but should not be relied upon for input
+processing.
 
 =head1 METHODS
 

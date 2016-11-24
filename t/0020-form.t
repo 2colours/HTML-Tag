@@ -2,7 +2,7 @@ use v6;
 use Test; 
 use lib <lib>;
 
-plan 15;
+plan 17;
 
 use-ok 'HTML::Tag::Tags', 'HTML::Tag::Tags can be use-d';
 use HTML::Tag::Tags;
@@ -81,5 +81,18 @@ is $form.render, '<form method="POST" name="form" action="/"><label for="form-us
 
 ok $form = HTML::Tag::Macro::Form.new(:input(%input), :def(@def), :action('/')), 'HTML::Tag::Macro::Form input values instatiate for input swallowing';
 
-is $form.render, '<form method="POST" name="form" action="/"><span>oofie<label for="form-username">Username</label><input name="username" id="form-username" type="text" value="mark"></span><label for="form-password">Password</label><input name="password" id="form-password" type="password"><input name="submit" id="form-submit" type="submit" value="Login"></form>', 'HTML::Tag::Macro::Form with value test password types set no values';
+is $form.render, '<form method="POST" name="form" action="/"><span>oofie<label for="form-username">Username</label><input name="username" id="form-username" type="text" value="mark"></span><label for="form-password">Password</label><input name="password" id="form-password" type="password"><input name="submit" id="form-submit" type="submit" value="Login"></form>', 'HTML::Tag::Macro::Form input swallowing';
+
+
+ok $form = HTML::Tag::Macro::Form.new(:nolabel, :action('/')), 'HTML::Tag::Macro::Form for required test instantated';
+
+@def = ( { username => { required => True }},
+	 { password => { }},
+	 { submit   => { type  => 'submit',
+			 value => 'Login', }},
+       );
+
+$form.def = @def;
+
+is $form.render, '<form method="POST" name="form" action="/"><input name="username" id="form-username" type="text" required><input name="password" id="form-password" type="text"><input name="submit" id="form-submit" type="submit" value="Login"></form>', 'HTML::Tag::Macro::Form required fields';
 
