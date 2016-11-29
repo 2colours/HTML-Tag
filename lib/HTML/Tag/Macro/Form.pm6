@@ -37,14 +37,16 @@ class HTML::Tag::Macro::Form
 		}
 	    }
 
+	    # Generate the tag
 	    my $tag = HTML::Tag::input.new(|%tagdef);
 	    @elements.push: %def<tag-before> if %def<tag-before>;
 
+	    # See about swallowing and labels
 	    my @interim-tag = ();
 	    if $.nolabel or %def<nolabel>:exists {
 		@interim-tag.push: $tag;
 	    } else {
-		my $label = %def<label>:exists ?? %def<label> !! %tagdef<name>.tc;
+		my $label = %def<label>:exists ?? %def<label> !! %tagdef<name>.tc.subst('_', ' ');
 		@interim-tag.push: HTML::Tag::label.new(:for(%tagdef<id>), :text($label)), $tag;
 	    }
 	    if (%def<swallowed-by>) {
@@ -56,6 +58,7 @@ class HTML::Tag::Macro::Form
 
 	    @elements.push: %def<tag-after> if %def<tag-after>;
 	}
+	
 	my $form = HTML::Tag::form.new(:name($.form-name),
 				       :text(@elements));
 	$form.action = $.action;
@@ -194,7 +197,9 @@ tag.
 =item C<nolabel> - if set to anything, renders no label for this element.
 
 =item C<label> - sets the label to the string provided, instead of
-using the default label, which is a titlecase version of C<name>.
+using the default label, which is a titlecase version of
+C<name>. Underscores are replaced with spaces automatically in the
+label.
 											       
 =item C<value> - manually sets the value for the element. This will
 override any value obtained by processing %input.
