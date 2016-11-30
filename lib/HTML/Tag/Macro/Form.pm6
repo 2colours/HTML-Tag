@@ -19,10 +19,11 @@ class HTML::Tag::Macro::Form
 
 	    %tagdef<name>  = %def<name>:exists ?? %def<name> !! $name;
 
-	    %tagdef<id>       = "{$.form-name}\-$name";
-	    %tagdef<class>    = %def<class> if %def<class>:exists;
-	    %tagdef<type>     = (%def<type> if %def<type>:exists) || 'text';
-	    %tagdef<required> = True if %def<required>;
+	    %tagdef<id>        = "{$.form-name}\-$name";
+	    %tagdef<class>     = %def<class> if %def<class>:exists;
+	    %tagdef<type>      = (%def<type> if %def<type>:exists) || 'text';
+	    %tagdef<required>  = True if %def<required>;
+	    %tagdef<autofocus> = True if %def<autofocus>;
 
 	    # Process input variables
 	    my $var = %def<var>:exists ?? %def<var> !! %tagdef<name>;
@@ -221,6 +222,9 @@ after happen outside of the swallow.
 =item C<required> - Marks the tag as required, which modern browsers
 will recognize and enforce, but should not be relied upon for input
 processing.
+
+=item C<autofocus> - The tag will have the HTML attribute added to it,
+to cause the form input field to receive focus on page load (HTML5).
 
 =head1 METHODS
 

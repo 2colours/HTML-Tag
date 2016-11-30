@@ -21,9 +21,19 @@ $form.def = @def;
 
 is $form.render, '<form method="POST" name="form" action="/"><input name="username" id="form-username" type="text"><input name="password" id="form-password" type="text"><input name="submit" id="form-submit" type="submit" value="Login"></form>', 'HTML::Tag::Macro::Form minimal def';
 
+@def = ( { username => { autofocus => True }},
+	 { password => { }},
+	 { submit   => { type  => 'submit',
+			 value => 'Login', }},
+       );
+
+$form.def = @def;
+
+is $form.render, '<form method="POST" name="form" action="/"><input name="username" id="form-username" type="text" autofocus><input name="password" id="form-password" type="text"><input name="submit" id="form-submit" type="submit" value="Login"></form>', 'HTML::Tag::Macro::Form autofocus';
+
 ok $form = HTML::Tag::Macro::Form.new(:def(@def), :action('/')), 'HTML::Tag::Macro::Form def passed directly in';
 
-is $form.render, '<form method="POST" name="form" action="/"><label for="form-username">Username</label><input name="username" id="form-username" type="text"><label for="form-password">Password</label><input name="password" id="form-password" type="text"><label for="form-submit">Submit</label><input name="submit" id="form-submit" type="submit" value="Login"></form>', 'HTML::Tag::Macro::Form with labels';
+is $form.render, '<form method="POST" name="form" action="/"><label for="form-username">Username</label><input name="username" id="form-username" type="text" autofocus><label for="form-password">Password</label><input name="password" id="form-password" type="text"><label for="form-submit">Submit</label><input name="submit" id="form-submit" type="submit" value="Login"></form>', 'HTML::Tag::Macro::Form with labels';
 
 @def = ( { username => { }},
 	 { password => { }},
