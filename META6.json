@@ -10,7 +10,7 @@
 	"HTML::Tag::Macro"        : "lib/HTML/Tag/Macro.pm6",
 	"HTML::Tag::Macro::Form"  : "lib/HTML/Tag/Macro/Form.pm6",
 	"HTML::Tag::Macro::List"  : "lib/HTML/Tag/Macro/List.pm6",
-	"HTML::Tag::Macro::Table" : "lib/HTML/Tag/Macro/Table.pm6",
+	"HTML::Tag::Macro::Table" : "lib/HTML/Tag/Macro/Table.pm6"
     },
     "depends" : [ "HTML::Entity" ],
     "resources" : [ ],
