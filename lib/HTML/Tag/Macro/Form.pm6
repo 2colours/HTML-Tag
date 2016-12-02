@@ -119,6 +119,11 @@ below. Detailed descriptions follow.
                   class   => undef,
                   value   => undef,
                   var     => undef,
+		  required     => False,
+		  autofocus    => False,
+		  tag-after    => HTML::Tag::<whatever>,
+		  tag-before   => HTML::Tag::<whatever>,
+		  swallowed-by => HTML::Tag::<whatever>,
                 }
        },
     );
@@ -234,6 +239,11 @@ Returns the rendered form with all its elements and values.
 					   
 =head1 AUTHOR
 
-Mark Rushing seatek@gmail.com
+Mark Rushing mark@orbislumen.net
+
+=head2 LICENSE
+
+This is free software; you can redistribute it and/or modify it under
+the Artistic License 2.0.
 
 =end pod

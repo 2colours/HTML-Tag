@@ -2,7 +2,7 @@ use v6;
 use Test; 
 use lib <lib>;
 
-plan 17;
+plan 18;
 
 use-ok 'HTML::Tag::Tags', 'HTML::Tag::Tags can be use-d';
 use HTML::Tag::Tags;

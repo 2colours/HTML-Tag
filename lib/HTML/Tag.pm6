@@ -102,3 +102,16 @@ role HTML::Tag::generic-tag[$T]
 	return $tag ~ "</$T>";
     }
 }
+
+=begin pod
+
+=head1 AUTHOR
+
+Mark Rushing mark@orbislumen.net
+
+=head1 LICENSE
+
+This is free software; you can redistribute it and/or modify it under
+the Artistic License 2.0.
+
+=end pod

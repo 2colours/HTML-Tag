@@ -100,3 +100,18 @@ class HTML::Tag::textarea is HTML::Tag::Form-tag  does HTML::Tag::generic-tag['t
 }
 class HTML::Tag::title is HTML::Tag does HTML::Tag::generic-tag['title'] {}
 class HTML::Tag::ul    is HTML::Tag does HTML::Tag::generic-tag['ul'] {}
+
+
+=begin pod
+
+=head1 AUTHOR
+
+Mark Rushing mark@orbislumen.net
+
+=head1 LICENSE
+
+This is free software; you can redistribute it and/or modify it under
+the Artistic License 2.0.
+
+=end pod
+

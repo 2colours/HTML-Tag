@@ -126,6 +126,11 @@ tag and returns the string.
 
 =head1 AUTHOR
 
-Mark Rushing seatek@gmail.com
+Mark Rushing mark@orbislumen.net
+
+=head2 LICENSE
+
+This is free software; you can redistribute it and/or modify it under
+the Artistic License 2.0.
 
 =end pod
