@@ -9,6 +9,12 @@ class HTML::Tag::Macro::List
     has Str  $.class;
     has Str  $.id;
 
+    method link(:$to!, :$text!, *%opts) {
+	self.item(HTML::Tag::a.new(:href($to),
+				   :text($text),
+				   |%opts));
+    }
+
     method item($item) {
 	@!items.push: $item;
     }
@@ -98,6 +104,12 @@ Specifies the HTML ordered list type to use.
 
 Things passed to item will be stored in an array for subsequent
 rendering between <li> elements.
+
+=head2 link(:$to!, :$text!, :%opts)
+
+Lists are commonly used to create menus of anchor links. The link()
+method creates an anchor link and appends it to list items to be
+rendered. %opts are options to the HTML::Tag::a if desired.
 
 =head2 render()
 
