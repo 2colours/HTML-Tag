@@ -63,6 +63,14 @@ class HTML::Tag::Macro::List
     $list.item(HTML::Tag::a.new(:href('http://elsewhere')
 				:text('snails')));
     $list.render;
+
+    # ..or..
+
+    my $list = HTML::Tag::Macro::List.new;
+    $list.link(:to('http://somewhere'), :text('rainbows'));
+    $list.link(:to('http://elsewhere'), :text('snails'), :class('highlight'));
+    $list.render;
+    
     =end code
 
 =head1 DESCRIPTION
