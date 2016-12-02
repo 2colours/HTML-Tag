@@ -37,8 +37,8 @@ Please see the POD documentation for each macro for more details on
 macro use.
 
 Also, an HTML::Tag::Exports can be used to export the symbol "tag"
-into your scope which shortens HTML::Tag::<thing> creation to
-tag('thing', |%opts)
+into your scope which shortens `HTML::Tag::<thing>` creation to
+`tag('thing', %opts)`
 
 # TAGS
 
