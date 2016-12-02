@@ -134,5 +134,9 @@ they are passed to every single row.
 Table options can be specified when instantiating the table macro with
 new using the (:table-opts) hash.
 
+=head1 AUTHOR
+
+Mark Rushing seatek@gmail.com
+
 =end pod
     

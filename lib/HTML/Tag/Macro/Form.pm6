@@ -232,4 +232,8 @@ to cause the form input field to receive focus on page load (HTML5).
 
 Returns the rendered form with all its elements and values.
 					   
+=head1 AUTHOR
+
+Mark Rushing seatek@gmail.com
+
 =end pod

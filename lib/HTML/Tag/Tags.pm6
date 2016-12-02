@@ -72,6 +72,15 @@ class HTML::Tag::label is HTML::Tag does HTML::Tag::generic-tag['label']
 class HTML::Tag::legend   is HTML::Tag::Form-tag  does HTML::Tag::generic-tag['legend'] {}
 class HTML::Tag::li       is HTML::Tag            does HTML::Tag::generic-tag['li'] {}
 class HTML::Tag::link     is HTML::Tag::Link-tag  does HTML::Tag::generic-single-tag['link'] {}
+class HTML::Tag::ol       is HTML::Tag            does HTML::Tag::generic-tag['ol']
+{
+    has $.type is rw;
+
+    method do-assignments() {
+	callsame;
+	$.attr<type> = $.type if $.type.defined;
+    }
+}
 class HTML::Tag::p        is HTML::Tag            does HTML::Tag::generic-tag['p'] {}
 class HTML::Tag::span     is HTML::Tag            does HTML::Tag::generic-tag['span'] {}
 class HTML::Tag::table    is HTML::Tag            does HTML::Tag::generic-tag['table'] {}
