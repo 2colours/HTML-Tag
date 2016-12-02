@@ -2,7 +2,7 @@ use v6;
 use Test; 
 use lib <lib>;
 
-plan 18;
+plan 19;
 
 use-ok 'HTML::Tag::Tags', 'HTML::Tag::Tags can be use-d';
 use HTML::Tag::Tags;
@@ -106,3 +106,14 @@ $form.def = @def;
 
 is $form.render, '<form method="POST" name="form" action="/"><input name="username" id="form-username" type="text" required><input name="password" id="form-password" type="text"><input name="submit" id="form-submit" type="submit" value="Login"></form>', 'HTML::Tag::Macro::Form required fields';
 
+$form = HTML::Tag::Macro::Form.new(:nolabel, :action('/')), 'HTML::Tag::Macro::Form instantated';
+
+@def = ( { username => { attrs => {:class('pink')} }},
+	 { password => { attrs => {:id('blue')} }},
+	 { submit   => { type  => 'submit',
+			 value => 'Login', }},
+       );
+
+$form.def = @def;
+
+is $form.render, '<form method="POST" name="form" action="/"><input name="username" id="form-username" class="pink" type="text"><input name="password" id="blue" type="text"><input name="submit" id="form-submit" type="submit" value="Login"></form>', 'HTML::Tag::Macro::Form using individual/normal tag attrs';

@@ -15,15 +15,16 @@ class HTML::Tag::Macro::Form
 	for @.def -> $element {
 	    my $name   = $element.keys.first;
 	    my %def    = $element{$name};
-	    my %tagdef = ();
+	    my %attr   = 
+	    my %tagdef = %def{'attrs'}:exists ?? %def{'attrs'} !! ();
 
 	    %tagdef<name>  = %def<name>:exists ?? %def<name> !! $name;
 
-	    %tagdef<id>        = "{$.form-name}\-$name";
-	    %tagdef<class>     = %def<class> if %def<class>:exists;
-	    %tagdef<type>      = (%def<type> if %def<type>:exists) || 'text';
-	    %tagdef<required>  = True if %def<required>;
-	    %tagdef<autofocus> = True if %def<autofocus>;
+	    %tagdef<id>        //= "{$.form-name}\-$name";
+	    %tagdef<class>     //= %def<class> if %def<class>:exists;
+	    %tagdef<type>      //= (%def<type> if %def<type>:exists) || 'text';
+	    %tagdef<required>  //= True if %def<required>;
+	    %tagdef<autofocus> //= True if %def<autofocus>;
 
 	    # Process input variables
 	    my $var = %def<var>:exists ?? %def<var> !! %tagdef<name>;
@@ -74,7 +75,7 @@ class HTML::Tag::Macro::Form
 
 =head1 SYNOPSIS
 
-    =begin code
+    =begin code :skip-test
     use HTML::Tag::Macro::Form;
 
     my $form = HTML::Tag::Macro::Form.new(:action('/hg/login/auth'),
@@ -103,7 +104,12 @@ input variable if given, etc. That key's value represents options for
 that form element. These options are listed in pseudocode
 below. Detailed descriptions follow.
 
-    =begin code
+Although several HTML::Tag attributes are defined below for
+convenience, you can pass any valid HTML::Tag attribute to each input
+tag by specifying the 'attrs' key and defining the individual tag
+attributes there.
+
+    =begin code :skip-test
     HTML::Tag::Macro::Form.new(@def,
                                %input,
                                $form-name,
@@ -119,6 +125,7 @@ below. Detailed descriptions follow.
                   class   => undef,
                   value   => undef,
                   var     => undef,
+		  attrs   => { :size(30)...etc },
 		  required     => False,
 		  autofocus    => False,
 		  tag-after    => HTML::Tag::<whatever>,
@@ -159,7 +166,7 @@ Defines the array of hashes that define each form element.
 
 =head1 THE @def ATTRIBUTE
 
-    =begin code
+    =begin code :skip-test
     @def = ( { firstname => {} },
              { lastname  => {} },
              { submit    => {} },
@@ -171,7 +178,7 @@ keys. However, we would like the C<submit> form element to be an
 actual submit button, and we would like it to have no automatic label
 generated for it.
 
-    =begin code
+    =begin code :skip-test
     ...
     { submit => {type    => 'submit',
                  nolabel => 1} },
@@ -199,6 +206,9 @@ the default C<var> name looked for in any %input provided.
 =item C<type> - specifies the text input's type (such as "submit"). If
 the type is "password" no value attribute will ever be printed for the
 tag.
+
+=item C<attrs> - hash of any normal HTML::Tag attribributes you might
+want to use beyond the ones defined here.
 
 =item C<nolabel> - if set to anything, renders no label for this element.
 
