@@ -22,9 +22,15 @@ class HTML::Tag::Macro::Form
 
 	    %tagdef<id>        //= "{$.form-name}\-$name";
 	    %tagdef<class>     //= %def<class> if %def<class>:exists;
-	    %tagdef<type>      //= (%def<type> if %def<type>:exists) || 'text';
 	    %tagdef<required>  //= True if %def<required>;
 	    %tagdef<autofocus> //= True if %def<autofocus>;
+	    %tagdef<type>      //= (%def<type> if %def<type>:exists) || 'text';
+
+	    my $tagClass = 'input';
+	    if %tagdef<type> eq 'textarea' {
+		$tagClass = 'textarea';
+		%tagdef<type>:delete;
+	    }
 
 	    # Process input variables
 	    my $var = %def<var>:exists ?? %def<var> !! %tagdef<name>;
@@ -34,13 +40,17 @@ class HTML::Tag::Macro::Form
 		}
 	    }
 	    elsif (%.input and %.input{$var}:exists) {
-		unless %tagdef<type> eq 'password' {
+		unless %tagdef<type>:exists and (%tagdef<type> eq 'password') {
 		    %tagdef<value> = %.input{$var};
 		}
 	    }
+	    if $tagClass eq 'textarea' {
+		%tagdef<text> //= %tagdef<value>;
+		%tagdef<value>:delete;
+	    }
 
 	    # Generate the tag
-	    my $tag = HTML::Tag::input.new(|%tagdef);
+	    my $tag = HTML::Tag::{$tagClass}.new(|%tagdef);
 	    @elements.push: %def<tag-before> if %def<tag-before>;
 
 	    # See about swallowing and labels

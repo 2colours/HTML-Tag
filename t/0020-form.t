@@ -2,7 +2,7 @@ use v6;
 use Test; 
 use lib <lib>;
 
-plan 19;
+plan 23;
 
 use-ok 'HTML::Tag::Tags', 'HTML::Tag::Tags can be use-d';
 use HTML::Tag::Tags;
@@ -106,7 +106,7 @@ $form.def = @def;
 
 is $form.render, '<form method="POST" name="form" action="/"><input name="username" id="form-username" type="text" required><input name="password" id="form-password" type="text"><input name="submit" id="form-submit" type="submit" value="Login"></form>', 'HTML::Tag::Macro::Form required fields';
 
-$form = HTML::Tag::Macro::Form.new(:nolabel, :action('/')), 'HTML::Tag::Macro::Form instantated';
+$form = HTML::Tag::Macro::Form.new(:nolabel, :action('/'));
 
 @def = ( { username => { attrs => {:class('pink')} }},
 	 { password => { attrs => {:id('blue')} }},
@@ -117,3 +117,62 @@ $form = HTML::Tag::Macro::Form.new(:nolabel, :action('/')), 'HTML::Tag::Macro::F
 $form.def = @def;
 
 is $form.render, '<form method="POST" name="form" action="/"><input name="username" id="form-username" class="pink" type="text"><input name="password" id="blue" type="text"><input name="submit" id="form-submit" type="submit" value="Login"></form>', 'HTML::Tag::Macro::Form using individual/normal tag attrs';
+
+$form = HTML::Tag::Macro::Form.new(:nolabel, :action('/'));
+
+@def = ( { username => { }},
+	    { password => { }},
+	    { notes    => { type => 'textarea' }},
+	    { submit   => { type  => 'submit',
+			    value => 'Login', }},
+	  );
+
+$form.def = @def;
+
+is $form.render, '<form method="POST" name="form" action="/"><input name="username" id="form-username" type="text"><input name="password" id="form-password" type="text"><textarea name="notes" id="form-notes"></textarea><input name="submit" id="form-submit" type="submit" value="Login"></form>', 'HTML::Tag::Macro::Form empty textarea';
+
+$form = HTML::Tag::Macro::Form.new(:nolabel, :action('/'));
+
+@def = ( { username => { }},
+	 { password => { }},
+	 { notes    => { type  => 'textarea',
+			 attrs => {text => 'I am a test'} }},
+	 { submit   => { type  => 'submit',
+			 value => 'Login', }},
+       );
+
+$form.def = @def;
+
+is $form.render, '<form method="POST" name="form" action="/"><input name="username" id="form-username" type="text"><input name="password" id="form-password" type="text"><textarea name="notes" id="form-notes">I am a test</textarea><input name="submit" id="form-submit" type="submit" value="Login"></form>', 'HTML::Tag::Macro::Form textarea with text';
+
+%input = notes => 'do not forget';
+
+$form = HTML::Tag::Macro::Form.new(:nolabel, :input(%input), :action('/'));
+
+@def = ( { username => { }},
+	 { password => { }},
+	 { notes    => { type  => 'textarea',
+			 attrs => {text => 'I am a test'} }},
+	 { submit   => { type  => 'submit',
+			 value => 'Login', }},
+       );
+
+$form.def = @def;
+
+is $form.render, '<form method="POST" name="form" action="/"><input name="username" id="form-username" type="text"><input name="password" id="form-password" type="text"><textarea name="notes" id="form-notes">I am a test</textarea><input name="submit" id="form-submit" type="submit" value="Login"></form>', 'HTML::Tag::Macro::Form textarea with text overrides value';
+
+%input = notes => 'do not forget';
+
+$form = HTML::Tag::Macro::Form.new(:nolabel, :input(%input), :action('/'));
+
+@def = ( { username => { }},
+	 { password => { }},
+	 { notes    => { type  => 'textarea' }},
+	 { submit   => { type  => 'submit',
+			 value => 'Login', }},
+       );
+
+$form.def = @def;
+
+is $form.render, '<form method="POST" name="form" action="/"><input name="username" id="form-username" type="text"><input name="password" id="form-password" type="text"><textarea name="notes" id="form-notes">do not forget</textarea><input name="submit" id="form-submit" type="submit" value="Login"></form>', 'HTML::Tag::Macro::Form textarea values work';
+
