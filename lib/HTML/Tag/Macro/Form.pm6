@@ -215,7 +215,9 @@ the default C<var> name looked for in any %input provided.
 
 =item C<type> - specifies the text input's type (such as "submit"). If
 the type is "password" no value attribute will ever be printed for the
-tag.
+tag. If type is "textarea" then the normal "text" C<attrs> can be
+specified to print text into it, which overrides any input value that
+may be present.
 
 =item C<attrs> - hash of any normal HTML::Tag attribributes you might
 want to use beyond the ones defined here.
