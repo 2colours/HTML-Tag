@@ -4,6 +4,7 @@ HTML::Tag - Simple HTML Tag Generators
 
 # SYNOPSIS
 
+```perl
     use HTML::Tag::Tags;
 
     say HTML::Tag::p.new(:text('This is my paragraph'), :class('pretty')).render;
@@ -16,6 +17,7 @@ HTML::Tag - Simple HTML Tag Generators
                          :class('pretty')).render;
     
     # <p class="pretty">This is my <a href="http://dom.com">paragraph</a>.
+```
 
 # DESCRIPTION
 
@@ -77,12 +79,14 @@ A HTML::Tag::Macro::Table object gets fed rows one after the
 other. These rows contain arrays of data that will be surrounded by
 td's.
 
+```perl
     my $table = HTML::Tag::Macro::Table.new;
     my @data = $var1, $var2, $var3;
     $table.row(@data);
     @data = $var4, $var5, $var6;
     $table.row(@data);
     $table.render;
+ ```
 
 The `.row` method takes `Bool :$header` which will generated th tags
 instead of td tags for each array element (representing a table header
@@ -96,6 +100,7 @@ The `.row` method takes `Hash :$td-opts` which will apply normal
 row. **$td-opts is keyed by the td array element** (see td-opts example
 code below).
 
+```perl
     $table = HTML::Tag::Macro::Table.new(:table-opts(id =>'myID'));
     @data = 'Col1', 'Col2', 'Col3';
     $table.row(:header(True), @data);
@@ -106,6 +111,7 @@ code below).
                     2 => {class => 'pretty',
                           id    => 'lastone'});
     $table.row(:td-opts($td-opts), @data);
+```
 
 As you can see the new constructor takes :$table-opts that will be
 passed along to the normal HTML::Tag::table object.
@@ -118,6 +124,7 @@ ROW
 Generates an ordered or unordered HTML list from a supplied array, or
 constructs the array for you by repeated calling of the item() method.
 
+```perl
     my $list = HTML::Tag::Macro::List.new;
     $list.link(:to('http://somewhere'), :text('rainbows'));
     $list.link(:to('http://elsewhere'), :text('snails'),
@@ -128,6 +135,7 @@ constructs the array for you by repeated calling of the item() method.
 
     my @fruit = 'fingers', 'sofa', 'airliner';
     my $html = HTML::Tag::Macro::List.new(:items(@fruit)).render;
+```
 
 The lists have a special method called link() that makes `HTML::Tag::a`
 links that are surrounded by list elements since this is a common way
@@ -146,6 +154,7 @@ The hash key represents the HTML name of the hash by default, and the
 input variable if given, etc. That key's value represents options for
 that form element.
 
+```perl
     use HTML::Tag::Macro::Form;
 
     my $form = HTML::Tag::Macro::Form.new(:action('/hg/login/auth'),
@@ -158,6 +167,7 @@ that form element.
                 );
 
     $form.render;
+```
 
 Most certainly a work in progress.
 
