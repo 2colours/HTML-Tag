@@ -37,7 +37,7 @@ my $td-opts = %(1 => {class => 'pretty'},
 		2 => {class => 'pretty',
 		      id    => 'lastone'});
 $table.row(:td-opts($td-opts), @data);
-is $table.render, '<table><tr><th>Col1</th><th>Col2</th><th>Col3</th></tr><tr><td>11</td><td>22</td><td>33</td></tr><tr><td>111</td><td class="pretty">222</td><td id="lastone" class="pretty">333</td></tr></table>', 'HTML::Tag::Macro::Table works with td-opts';
+is $table.render, '<table><tr><th>Col1</th><th>Col2</th><th>Col3</th></tr><tr><td>11</td><td>22</td><td>33</td></tr><tr><td>111</td><td class="pretty">222</td><td class="pretty" id="lastone">333</td></tr></table>', 'HTML::Tag::Macro::Table works with td-opts';
 
 $table = HTML::Tag::Macro::Table.new(:table-opts(id => 'mytable'));
 @data = 'Col1', 'Col2', 'Col3';

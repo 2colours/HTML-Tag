@@ -12,7 +12,8 @@ class HTML::Tag
     method mktag(:$prefix, :$suffix = '>') {
 	my $tag;
 	$tag = $prefix if $prefix;
-	$.attr.keys.map: { when 'checked'   { $tag ~= ' checked' }
+	$.attr.keys.sort.map: {
+			   when 'checked'   { $tag ~= ' checked'  }
 			   when 'disabled'  { $tag ~= ' disabled' }
 			   when 'readonly'  { $tag ~= ' readonly' }
 			   when 'required'  { $tag ~= ' required' }

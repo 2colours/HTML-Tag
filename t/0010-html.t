@@ -13,13 +13,13 @@ use HTML::Tag::Macro;
 is HTML::Tag::p.new(:text('testing & here')).render, '<p>testing &amp; here</p>', 'HTML::Tag::p works ok';
 is HTML::Tag::p.new(text => 'test', :id('myID')).render, '<p id="myID">test</p>', 'HTML::Tag::p.id works';
 is HTML::Tag::p.new(text => 'test', :class('myclass')).render, '<p class="myclass">test</p>', 'HTML::Tag::p.class works';
-is HTML::Tag::p.new(:text('test'), :class('MYClass'), :id('myNAME')).render, '<p id="myNAME" class="MYClass">test</p>', 'HTML::Tag::p.class and .id both work together';
+is HTML::Tag::p.new(:text('test'), :class('MYClass'), :id('myNAME')).render, '<p class="MYClass" id="myNAME">test</p>', 'HTML::Tag::p.class and .id both work together';
 
 # Anchor
 is HTML::Tag::a.new(:text('My Page'), :href('http://mydomain.com')).render, '<a href="http://mydomain.com">My Page</a>', 'HTML::Tag::a works';
 
 # Link
-is HTML::Tag::link.new(:href('http://mydomain.com'), :rel('stylesheet'), :type('text/css')).render, '<link rel="stylesheet" href="http://mydomain.com" type="text/css">', 'HTML::Tag::link works';
+is HTML::Tag::link.new(:href('http://mydomain.com'), :rel('stylesheet'), :type('text/css')).render, '<link href="http://mydomain.com" rel="stylesheet" type="text/css">', 'HTML::Tag::link works';
 
 # Break
 is HTML::Tag::br.new.render, '<br>', 'HTML::Tag::br works';
@@ -45,7 +45,7 @@ is HTML::Tag::div.new(:text('My Div'), :style('funnyfont')).render, '<div style=
 is HTML::Tag::span.new(:text('My Span')).render, '<span>My Span</span>', 'HTML::Tag::span works';
 
 # Form
-is HTML::Tag::form.new(:action('/myscript/is') :id('myid')).render, '<form method="POST" id="myid" action="/myscript/is"></form>', 'HTML::Tag::form works';
+is HTML::Tag::form.new(:action('/myscript/is') :id('myid')).render, '<form action="/myscript/is" id="myid"method="POST"></form>', 'HTML::Tag::form works';
 is HTML::Tag::input.new(:value('testval'), :min(0)).render, '<input min="0" type="text" value="testval">', 'HTML::Tag::input works';
 is HTML::Tag::input.new(:type('radio'), :checked(True)).render, '<input checked type="radio">', 'HTML::Tag::input radio checked works';
 is HTML::Tag::textarea.new(:text('This is in the box'), :id('boxy')).render, '<textarea id="boxy">This is in the box</textarea>', 'HTML::Tag::textarea works';
@@ -56,13 +56,13 @@ is HTML::Tag::fieldset.new(:form('myform'), :text($legend, $tag)).render, '<fiel
 
 # CSS Macro
 is HTML::Tag::Macro::CSS.new(:href('css/file.css')).render,
-'<link rel="stylesheet" href="css/file.css" type="text/css">', 'HTML::Tag::Macro:CSS works';
+'<link href="css/file.css" rel="stylesheet" type="text/css">', 'HTML::Tag::Macro:CSS works';
 
 # Image
 is HTML::Tag::img.new(:src('/img/foo.jpg'),
 		      :width(100), :height(150),
 		      :alt('funny pic'),
-		      :border(0)).render, '<img height="150" alt="funny pic" border="0" width="100" src="/img/foo.jpg">', 'HTML::Tag::img works.';
+		      :border(0)).render, '<img alt="funny pic" border="0" height="150" src="/img/foo.jpg" width="100">', 'HTML::Tag::img works.';
 
 # Table
 my $th1 = HTML::Tag::th.new(:text('Col1'));
