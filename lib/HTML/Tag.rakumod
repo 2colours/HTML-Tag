@@ -1,5 +1,5 @@
 use v6;
-use HTML::Entity;
+use XML::Entity::HTML;
 
 class HTML::Tag
 {
@@ -18,7 +18,7 @@ class HTML::Tag
 			   when 'readonly'  { $tag ~= ' readonly' }
 			   when 'required'  { $tag ~= ' required' }
 			   when 'autofocus' { $tag ~= ' autofocus' }
-			   when 'value'     { $tag ~= " $_=\"{encode-entities($.attr{$_})}\"" } 
+			   when 'value'     { $tag ~= " $_=\"{encode-html-entities($.attr{$_}.Str)}\"" } 
 			   default          { $tag ~= " $_=\"{$.attr{$_}}\"" };
 			 }
 	$tag ~= $suffix if $suffix;
@@ -102,7 +102,7 @@ role HTML::Tag::generic-tag[$T]
 	@.text.map: { next unless $_;
 		      $tag ~= $_.^name ~~ /HTML\:\:Tag/ ??
 			      $_.render !!
-                              encode-entities($_)
+                              encode-html-entities(.Str)
 		    };
 	return $tag ~ "</$T>";
     }

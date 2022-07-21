@@ -45,7 +45,7 @@ is HTML::Tag::div.new(:text('My Div'), :style('funnyfont')).render, '<div style=
 is HTML::Tag::span.new(:text('My Span')).render, '<span>My Span</span>', 'HTML::Tag::span works';
 
 # Form
-is HTML::Tag::form.new(:action('/myscript/is') :id('myid')).render, '<form action="/myscript/is" id="myid"method="POST"></form>', 'HTML::Tag::form works';
+is HTML::Tag::form.new(:action('/myscript/is') :id('myid')).render, '<form action="/myscript/is" id="myid" method="POST"></form>', 'HTML::Tag::form works';
 is HTML::Tag::input.new(:value('testval'), :min(0)).render, '<input min="0" type="text" value="testval">', 'HTML::Tag::input works';
 is HTML::Tag::input.new(:type('radio'), :checked(True)).render, '<input checked type="radio">', 'HTML::Tag::input radio checked works';
 is HTML::Tag::textarea.new(:text('This is in the box'), :id('boxy')).render, '<textarea id="boxy">This is in the box</textarea>', 'HTML::Tag::textarea works';
