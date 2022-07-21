@@ -13,10 +13,10 @@ HTML::Tag - Simple HTML Tag Generators
 
     my $link = HTML::Tag::a.new(:text('paragraph'),
                                 :href('http://dom.com'));
-    say HTML::Tag::p.new(:text("This is my ", $link, ".")),
+    say HTML::Tag::p.new(:text("This is my ", $link, "."),
                          :class('pretty')).render;
     
-    # <p class="pretty">This is my <a href="http://dom.com">paragraph</a>.
+    # <p class="pretty">This is my <a href="http://dom.com">paragraph</a>&period;</p>
 ```
 
 # DESCRIPTION
@@ -110,7 +110,7 @@ code below).
     my $td-opts = %(1 => {class => 'pretty'},
                     2 => {class => 'pretty',
                           id    => 'lastone'});
-    $table.row(:td-opts($td-opts), @data);
+    $table.row(:$td-opts, @data);
 ```
 
 As you can see the new constructor takes :$table-opts that will be
@@ -149,7 +149,7 @@ variable must be an array of hashes.
 The array of hashes represents one form element per hash in the
 array. Labels are automatically generated for all form elements by
 default.
-
+-
 The hash key represents the HTML name of the hash by default, and the
 input variable if given, etc. That key's value represents options for
 that form element.
