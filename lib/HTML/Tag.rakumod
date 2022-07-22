@@ -33,6 +33,15 @@ class HTML::Tag
     }
 }
 
+class HTML::Tag::Raw
+{
+    has $.text is rw = '';
+
+    method render() {
+        $.text
+    }
+}
+
 class HTML::Tag::Link-tag is HTML::Tag
 {
     has $.href is rw;
