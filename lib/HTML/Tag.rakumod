@@ -99,7 +99,7 @@ role HTML::Tag::generic-tag[$T]
     method render() {
 	self.do-assignments;
 	my $tag = self.mktag(:prefix("<$T"));
-	@.text.map: { next unless $_;
+	@.text.map: { next without $_;
 		      $tag ~= $_.^name ~~ /HTML\:\:Tag/ ??
 			      $_.render !!
                               encode-html-entities(.Str)
