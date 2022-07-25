@@ -5,9 +5,9 @@ use HTML::Tag::Tags;
 class HTML::Tag::Macro::CSS is HTML::Tag::link
 {
     method do-assignments() {
-	callsame;
 	$.attr<rel>  = $.rel  || 'stylesheet';
 	$.attr<type> = $.type || 'text/css';
+        nextsame
     }
 }
 

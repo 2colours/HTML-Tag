@@ -12,15 +12,12 @@ class HTML::Tag
     method mktag(:$prefix, :$suffix = '>') {
 	my $tag;
 	$tag = $prefix if $prefix;
-	$.attr.keys.sort.map: {
-			   when 'checked'   { $tag ~= ' checked'  }
-			   when 'disabled'  { $tag ~= ' disabled' }
-			   when 'readonly'  { $tag ~= ' readonly' }
-			   when 'required'  { $tag ~= ' required' }
-			   when 'autofocus' { $tag ~= ' autofocus' }
-			   when 'value'     { $tag ~= " $_=\"{encode-html-entities($.attr{$_}.Str)}\"" } 
-			   default          { $tag ~= " $_=\"{$.attr{$_}}\"" };
-			 }
+        constant %self-resolving = :checked, :disabled, :readonly, :required, :autofocus;
+	$tag ~= $.attr.keys.sort.map({
+                           when %self-resolving{$_} { $_ }
+			   when 'value'     { " value=\"{encode-html-entities($.attr<value>.Str)}\"" } 
+			   default          { " $_=\"{$.attr{$_}}\"" };
+			 }).join;
 	$tag ~= $suffix if $suffix;
 	return $tag;
     }
@@ -50,11 +47,11 @@ class HTML::Tag::Link-tag is HTML::Tag
     has $.type is rw;
 
     method do-assignments() {
-	callsame;
 	$.attr<href>   = $.href   if $.href;
 	$.attr<target> = $.target if $.target;
 	$.attr<rel>    = $.rel    if $.rel;
 	$.attr<type>   = $.type   if $.type;
+        nextsame
     }
 }
 
@@ -63,8 +60,8 @@ class HTML::Tag::Table-tag is HTML::Tag
     has Int $.colspan is rw;
 
     method do-assignments() {
-	callsame;
 	$.attr<colspan> = $.colspan if $.colspan.defined;
+        nextsame
     }
 }
 
@@ -80,7 +77,6 @@ class HTML::Tag::Form-tag is HTML::Tag
     has     $.form      is rw;
 
     method do-assignments() {
-	callsame;
 	$.attr<disabled>  = $.disabled  if $.disabled;
 	$.attr<readonly>  = $.readonly  if $.readonly;
 	$.attr<required>  = $.required  if $.required;
@@ -89,6 +85,7 @@ class HTML::Tag::Form-tag is HTML::Tag
 	$.attr<size>      = $.size      if $.size.defined;
 	$.attr<value>     = $.value     if $.value;
 	$.attr<form>      = $.form      if $.form;
+        nextsame
     }
 }   
 
@@ -108,11 +105,9 @@ role HTML::Tag::generic-tag[$T]
     method render() {
 	self.do-assignments;
 	my $tag = self.mktag(:prefix("<$T"));
-	@.text.map: { next without $_;
-		      $tag ~= $_.^name ~~ /HTML\:\:Tag/ ??
-			      $_.render !!
-                              encode-html-entities(.Str)
-		    };
+	$tag ~= @.text.map({ next without $_;
+                                   .?render // encode-html-entities(.Str)
+		    }).join;
 	return $tag ~ "</$T>";
     }
 }

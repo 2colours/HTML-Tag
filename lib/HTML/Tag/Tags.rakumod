@@ -12,9 +12,9 @@ class HTML::Tag::form     is HTML::Tag::Form-tag does HTML::Tag::generic-tag['fo
     has Str $.method is rw = 'POST';
 
     method do-assignments() {
-	callsame;
 	$.attr<action> = $.action if $.action;
 	$.attr<method> = $.method if $.method;
+        nextsame
    }	
 }
 class HTML::Tag::h1   is HTML::Tag does HTML::Tag::generic-tag['h1'] {}
@@ -35,12 +35,12 @@ class HTML::Tag::img  is HTML::Tag does HTML::Tag::generic-single-tag['img']
     has Int $.border is rw;
 
     method do-assignments() {
-	callsame;
 	$.attr<src>    = $.src    if  $.src;
 	$.attr<alt>    = $.alt    if  $.alt;
 	$.attr<width>  = $.width  if  $.width.defined;
 	$.attr<height> = $.height if  $.height.defined;
 	$.attr<border> = $.border if  $.border.defined;
+        nextsame
     }
 }
 class HTML::Tag::input is HTML::Tag::Form-tag does HTML::Tag::generic-single-tag['input']
@@ -52,12 +52,12 @@ class HTML::Tag::input is HTML::Tag::Form-tag does HTML::Tag::generic-single-tag
     has      $.checked is rw;
 
     method do-assignments() {
-	callsame;
 	$.attr<type>    = $.type    if $.type;
 	$.attr<checked> = $.checked if $.checked;
 	$.attr<min>     = $.min     if $.min.defined;
 	$.attr<max>     = $.max     if $.max.defined;
 	$.attr<alt>     = $.alt     if $.alt.defined;
+        nextsame
     }
 }
 class HTML::Tag::label is HTML::Tag does HTML::Tag::generic-tag['label']
@@ -65,8 +65,8 @@ class HTML::Tag::label is HTML::Tag does HTML::Tag::generic-tag['label']
     has $.for is rw;
 
     method do-assignments() {
-	callsame;
 	$.attr<for> = $.for if $.for;
+        nextsame
     }
 }
 class HTML::Tag::legend   is HTML::Tag::Form-tag  does HTML::Tag::generic-tag['legend'] {}
@@ -77,8 +77,8 @@ class HTML::Tag::ol       is HTML::Tag            does HTML::Tag::generic-tag['o
     has $.type is rw;
 
     method do-assignments() {
-	callsame;
 	$.attr<type> = $.type if $.type.defined;
+        nextsame
     }
 }
 class HTML::Tag::p        is HTML::Tag            does HTML::Tag::generic-tag['p'] {}
@@ -93,9 +93,9 @@ class HTML::Tag::textarea is HTML::Tag::Form-tag  does HTML::Tag::generic-tag['t
     has Int $.cols is rw;
 
     method do-assignments() {
-	callsame;
 	$.attr<rows> = $.rows if $.rows.defined;
 	$.attr<cols> = $.cols if $.cols.defined;
+        nextsame
     }
 }
 class HTML::Tag::title is HTML::Tag does HTML::Tag::generic-tag['title'] {}
