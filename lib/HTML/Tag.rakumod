@@ -14,7 +14,7 @@ class HTML::Tag
 	$tag = $prefix if $prefix;
         constant %self-resolving = :checked, :disabled, :readonly, :required, :autofocus;
 	$tag ~= $.attr.keys.sort.map({
-                           when %self-resolving{$_} { $_ }
+                          when %self-resolving{$_} { " $_" }
 			   when 'value'     { " value=\"{encode-html-entities($.attr<value>.Str)}\"" } 
 			   default          { " $_=\"{$.attr{$_}}\"" };
 			 }).join;
