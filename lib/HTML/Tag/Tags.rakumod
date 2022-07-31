@@ -72,6 +72,7 @@ class HTML::Tag::label is HTML::Tag does HTML::Tag::generic-tag['label']
 class HTML::Tag::legend   is HTML::Tag::Form-tag  does HTML::Tag::generic-tag['legend'] {}
 class HTML::Tag::li       is HTML::Tag            does HTML::Tag::generic-tag['li'] {}
 class HTML::Tag::link     is HTML::Tag::Link-tag  does HTML::Tag::generic-single-tag['link'] {}
+class HTML::Tag::meta     is HTML::Tag            does HTML::Tag::generic-single-tag['meta'] {}
 class HTML::Tag::ol       is HTML::Tag            does HTML::Tag::generic-tag['ol']
 {
     has $.type is rw;

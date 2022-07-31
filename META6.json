@@ -2,7 +2,7 @@
     "name" : "HTML::Tag",
     "auth": "zef:2colours",
     "license" : "Artistic-2.0",
-    "version" : "0.0.5",
+    "version" : "0.0.6",
     "description" : "Generate simple, interleafable, HTML tags.",
     "authors" : [ "Mark Rushing" ],
     "provides" : {
@@ -14,7 +14,7 @@
 	"HTML::Tag::Macro::List"  : "lib/HTML/Tag/Macro/List.rakumod",
 	"HTML::Tag::Macro::Table" : "lib/HTML/Tag/Macro/Table.rakumod"
     },
-    "depends" : [ "XML::Entity::HTML" ],
+    "depends" : [ "HTML::Entity::Fast" ],
     "resources" : [ ],
     "source-url" : "https://github.com/2colours/HTML-Tag.git"
 }

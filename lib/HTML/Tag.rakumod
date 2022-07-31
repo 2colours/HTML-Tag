@@ -1,5 +1,5 @@
 use v6;
-use XML::Entity::HTML;
+use HTML::Entity::Fast;
 
 class HTML::Tag
 {
