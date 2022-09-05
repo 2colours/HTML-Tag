@@ -7,8 +7,8 @@ class HTML::Tag::Macro::Table
     has $.table-opts is rw = {};
 
     method row(Bool :$header = False,
-	       Hash :$td-opts,
-	       Hash :$tr-opts = {},
+	       Map :$td-opts,
+	       Map :$tr-opts = {},
 	       *@cols) {
 	
 	my @col-objects;
@@ -20,12 +20,12 @@ class HTML::Tag::Macro::Table
 	@!rows.push: HTML::Tag::tr.new(:text(|@col-objects), |$tr-opts);
     }
 
-    method rows(Hash :$td-opts,
-		Hash :$tr-opts = {},
-		*@rows) {
+    method rows(Map :$td-opts,
+		Map :$tr-opts = {},
+		**@rows) {
 
-	@rows.map: { self.row(:td-opts($td-opts),
-			      :tr-opts($tr-opts),
+	@rows.map: { self.row(:$td-opts,
+			      :$tr-opts,
 			      |$_ );
 		   }
     }

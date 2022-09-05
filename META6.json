@@ -2,9 +2,9 @@
     "name" : "HTML::Tag",
     "auth": "zef:2colours",
     "license" : "Artistic-2.0",
-    "version" : "0.0.6",
+    "version" : "0.1.0",
     "description" : "Generate simple, interleafable, HTML tags.",
-    "authors" : [ "Mark Rushing" ],
+    "authors" : [ "Mark Rushing", "Márton Polgár" ],
     "provides" : {
 	"HTML::Tag"               : "lib/HTML/Tag.rakumod",
 	"HTML::Tag::Tags"         : "lib/HTML/Tag/Tags.rakumod",

@@ -53,6 +53,8 @@ tag's :text attribute. Tags are then recursively rendered when .render
 is called on the furthest-outward containing tag (such as
 HTML::Tag::html which represents an entire page).
 
+`HTML::Tag::Raw` represents raw HTML text that renders as its content itself.
+
 `HTML::Tag::Macro::CSS` will generate a CSS link.
 
 `HTML::Tag::Macro::Table` will help generate tables.
@@ -92,10 +94,10 @@ The `.row` method takes `Bool :$header` which will generated th tags
 instead of td tags for each array element (representing a table header
 row).
 
-The `.row` method takes `Hash :$tr-opts` which will apply normal
+The `.row` method takes `Map :$tr-opts` which will apply normal
 `HTML::Tag::tr` options to that row, as specified in :$tr-opts.
 
-The `.row` method takes `Hash :$td-opts` which will apply normal
+The `.row` method takes `Map :$td-opts` which will apply normal
 `HTML::Tag::td` options to td tags that are generated for that
 row. **$td-opts is keyed by the td array element** (see td-opts example
 code below).
@@ -173,7 +175,8 @@ Most certainly a work in progress.
 
 # AUTHOR
 
-Mark Rushing <mark@orbislumen.net>
+Current maintenance: Polgár, Márton <ersterpleghthome@gmail.com>
+Author of the original module: Rushing, Mark  <mark@orbislumen.net>
 
 # LICENSE
 

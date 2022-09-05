@@ -2,12 +2,15 @@ use v6;
 use Test; 
 use lib <lib>;
 
-plan 29;
+plan 31;
 
 use-ok 'HTML::Tag::Tags', 'HTML::Tag::Tags can be use-d';
 use HTML::Tag::Tags;
 use-ok 'HTML::Tag::Macro', 'HTML::Tag::Macro can be use-d';
 use HTML::Tag::Macro;
+
+# Raw tag for avoiding escaping
+is HTML::Tag::Raw.new(:text('<éáű>&')).render, '<éáű>&', 'HTML::Tag::Raw works';
 
 # P and class/id attributes
 is HTML::Tag::p.new(:text('testing & here')).render, '<p>testing &amp; here</p>', 'HTML::Tag::p works ok';
@@ -20,6 +23,9 @@ is HTML::Tag::a.new(:text('My Page'), :href('http://mydomain.com')).render, '<a 
 
 # Link
 is HTML::Tag::link.new(:href('http://mydomain.com'), :rel('stylesheet'), :type('text/css')).render, '<link href="http://mydomain.com" rel="stylesheet" type="text/css">', 'HTML::Tag::link works';
+
+# Meta
+is HTML::Tag::meta.new(attr => { :charset('utf-8') }).render, '<meta charset="utf-8">', 'HTML::Tag::meta works';
 
 # Break
 is HTML::Tag::br.new.render, '<br>', 'HTML::Tag::br works';
