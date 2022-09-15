@@ -2,7 +2,7 @@
     "name" : "HTML::Tag",
     "auth": "zef:2colours",
     "license" : "Artistic-2.0",
-    "version" : "0.1.0",
+    "version" : "0.1.1",
     "description" : "Generate simple, interleafable, HTML tags.",
     "authors" : [ "Mark Rushing", "Márton Polgár" ],
     "provides" : {

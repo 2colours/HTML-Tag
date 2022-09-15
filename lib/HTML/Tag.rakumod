@@ -58,9 +58,11 @@ class HTML::Tag::Link-tag is HTML::Tag
 class HTML::Tag::Table-tag is HTML::Tag
 {
     has Int $.colspan is rw;
+    has Int $.rowspan is rw;
 
     method do-assignments() {
-	$.attr<colspan> = $.colspan if $.colspan.defined;
+	$.attr<colspan> = $_ with $.colspan;
+	$.attr<rowspan> = $_ with $.rowspan;
         nextsame
     }
 }

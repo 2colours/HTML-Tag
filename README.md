@@ -176,6 +176,7 @@ Most certainly a work in progress.
 # AUTHOR
 
 Current maintenance: Polgár, Márton <ersterpleghthome@gmail.com>
+
 Author of the original module: Rushing, Mark  <mark@orbislumen.net>
 
 # LICENSE
