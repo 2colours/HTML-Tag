@@ -2,7 +2,7 @@ use v6;
 use Test; 
 use lib <lib>;
 
-plan 31;
+plan 32;
 
 use-ok 'HTML::Tag::Tags', 'HTML::Tag::Tags can be use-d';
 use HTML::Tag::Tags;
@@ -69,6 +69,9 @@ is HTML::Tag::img.new(:src('/img/foo.jpg'),
 		      :width(100), :height(150),
 		      :alt('funny pic'),
 		      :border(0)).render, '<img alt="funny pic" border="0" height="150" src="/img/foo.jpg" width="100">', 'HTML::Tag::img works.';
+
+# Script
+is HTML::Tag::script.new(:src('/demo/core.js')).render, '<script src="/demo/core.js"></script>', 'HTML::Tag::script works (with src).';
 
 # Table
 my $th1 = HTML::Tag::th.new(:text('Col1'));

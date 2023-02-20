@@ -4,6 +4,7 @@ use HTML::Tag;
 class HTML::Tag::a        is HTML::Tag::Link-tag does HTML::Tag::generic-tag['a'] {}
 class HTML::Tag::br       is HTML::Tag           does HTML::Tag::generic-single-tag['br'] {}
 class HTML::Tag::body     is HTML::Tag           does HTML::Tag::generic-tag['body'] {}
+class HTML::Tag::canvas   is HTML::Tag           does HTML::Tag::generic-tag['canvas'] {}
 class HTML::Tag::div      is HTML::Tag           does HTML::Tag::generic-tag['div'] {}
 class HTML::Tag::fieldset is HTML::Tag::Form-tag does HTML::Tag::generic-tag['fieldset'] {}
 class HTML::Tag::form     is HTML::Tag::Form-tag does HTML::Tag::generic-tag['form']
@@ -83,6 +84,14 @@ class HTML::Tag::ol       is HTML::Tag            does HTML::Tag::generic-tag['o
     }
 }
 class HTML::Tag::p        is HTML::Tag            does HTML::Tag::generic-tag['p'] {}
+class HTML::Tag::script is HTML::Tag does HTML::Tag::generic-tag['script'] {
+    has Str $.src is rw;
+
+    method do-assignments() {
+	$.attr<src> = $.src if $.src;
+        nextsame
+   }	
+}
 class HTML::Tag::span     is HTML::Tag            does HTML::Tag::generic-tag['span'] {}
 class HTML::Tag::table    is HTML::Tag            does HTML::Tag::generic-tag['table'] {}
 class HTML::Tag::td       is HTML::Tag::Table-tag does HTML::Tag::generic-tag['td'] {}
